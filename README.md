@@ -1,7 +1,7 @@
 # Compiladores 2017-1
 
->> Equipo Tlacuaches
-------------------
+> Equipo Tlacuaches
+-------------------
 
 Repositorio para el curso de compiladores del ciclo 2017-1 de la H. UNAM.
 
