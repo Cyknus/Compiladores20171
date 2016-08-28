@@ -116,11 +116,11 @@ public class AnalizadorLex {
         String[] estados = {"q0","q1","q2","q3","q4","q5"};
         String[] alfabeto = {"a","b","c"};
         String[] finales = {"q2","q5"};
-        ArrayList<String> tokens = tokenize(estados, alfabeto,"q0",finales , funciones,"abababababababababababababab");
+        ArrayList<String> tokens = tokenize(estados, alfabeto,"q0",finales , funciones,"ababababababababababababababc");
     
         System.out.println("Tokens:"+"\n");
         for(String token : tokens){
-            System.out.println(token+"\n");
+            System.out.println("Cadena("+token+")\n");
         }
     }
     
