@@ -7,13 +7,13 @@ JFlex reconoce una pequeña cantidad del contexto que le rodea. Los dos operador
 
  En otras palabras el operador (^), por ejemplo, es un operador de contexto previo, que reconoce inmediatamente contexto que precede por la izquierda del mismo modo que el signo de dólar ($) reconoce el contexto que va inmediatamente a la derecha.
  
- ## 2. ¿Cómo usar la función de depuración de JFlex?
+## 2. ¿Cómo usar la función de depuración de JFlex?
  
  Si incluimos la directiva %debug JFlex creará una función main () de la clase yylex, lo que nos permite correr el analizador léxico sin un analizador adjunto. La función main () recibirá un nombre de archivo de entrada de la línea de comandos. Se procesará los tokens en ese archivo y reportará información sobre cada token.
  
- ## 3. Reconocer atomos DEDENT, INDENT y NEWLINE
+## 3. Reconocer atomos DEDENT, INDENT y NEWLINE
  
- ## 4. En el uso del lenguage ¿La identación significativa fácilita echar código?
+## 4. En el uso del lenguage ¿La identación significativa fácilita echar código?
  
  Se supone que la indentación significativa de Python tiene razones técnicas prácticas:
  * Hace más clara la sintaxis. De hecho, se escribe menos.
