@@ -9,7 +9,7 @@ JFlex reconoce una pequeña cantidad del contexto que le rodea. Los dos operador
  
 ## 2. ¿Cómo usar la función de depuración de JFlex?
  
- Si incluimos la directiva %debug JFlex creará una función main () de la clase yylex, lo que nos permite correr el analizador léxico sin un analizador adjunto. La función main () recibirá un nombre de archivo de entrada de la línea de comandos. Se procesará los tokens en ese archivo y reportará información sobre cada token.
+ Si incluimos la directiva %debug en lugar de  %standalone JFlex creará una función main () de la clase yylex, lo que nos permite correr el analizador léxico sin un analizador adjunto. La función main () recibirá un nombre de archivo de entrada de la línea de comandos. Se procesará los tokens en ese archivo y reportará información sobre cada token.
  
 ## 3. Reconocer atomos DEDENT, INDENT y NEWLINE
  
