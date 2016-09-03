@@ -12,3 +12,4 @@ EXPRESION = {LETRAA}{LETRAB} | ({LETRAA}{LETRAB})*{LETRAC}
 %%
 
 {EXPRESION}		      	{ System.out.println("CADENA("+yytext()+")");}				
+

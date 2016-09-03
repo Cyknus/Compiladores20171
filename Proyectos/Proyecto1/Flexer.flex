@@ -4,11 +4,13 @@
 %standalone
 
 NEWLINE = [\n$]
-INDENT=[\ \t]
+INDENT=[ ]
 
 
 
 %%
 
 {NEWLINE}		      	{ System.out.println("NEWLINE");}
-^{INDENT}+              { System.out.println("INDENT("+yylength()+")");}
+^{INDENT}+ 				{ if (yylength() > 0) 
+						{ System.out.println("INDENT("+yylength()+")");}
+						else { System.out.println("DEDENT");}  }
