@@ -16,12 +16,9 @@ int current_line_indent;
 int TAB;
 int ESP;
 
- public void clear(){
-    current_line_indent = 0;
-  } 
 
 public void increase_ident(int n){
-  current_line_indent += n;
+  current_line_indent = current_line_indent + n;
 }
 
 public int top(){
@@ -62,24 +59,24 @@ KEYWORD = "and" | "or" | "not" | "for" | "while" | "if" | "else" | "elif" | "pri
 OPERADOR = "+" | "-" | "*" | "**" | "/" | "//" | "%" | ">" | "<" | ">=" | "<=" | "==" | "!=" | "-=" | "+="
 SEPARADOR = "(" | ")" | ":" | ";" | "=" 
 NEWLINE = [\n$]
-TABULADOR = "\t"
+TABULADOR = [\t]
 ESPACIO = " "
 IDENTACION = {ESPACIO}	| {TABULADOR}
-PYTHON = {IDENTACION} | ({IDENTIFICADOR} | {OPERADOR} | {BOOLEANO} |{ENTERO} | {REAL} | {SEPARADOR})*
+PYTHON = {IDENTACION}* | {IDENTIFICADOR}* | {OPERADOR}* | {BOOLEANO}* |{ENTERO}* | {REAL}* | {SEPARADOR}*
 
 
 
 %%
 
-{NEWLINE}          {System.out.println("NEWLINE");clear();}
-{TABULADOR}       {increase_ident(TAB);}
-{ESPACIO}         {increase_ident(ESP);}
+{NEWLINE}         {System.out.println("NEWLINE");}
+^{TABULADOR}*       {increase_ident(TAB);}
+^{ESPACIO}*         {increase_ident(ESP);}
 
 {CADENAS}         {System.out.println("CADENA("+yytext()+")");}
 {BOOLEANO}        {System.out.println("BOOLEANO("+yytext()+")");}
 {KEYWORD}         {System.out.println("KEYWORD("+yytext()+")");}
 {IDENTIFICADOR}   {System.out.println("IDENTIFICADOR("+yytext()+")");}
-{ENTERO}*          {System.out.println("ENTERO("+yytext()+")");}
+{ENTERO}          {System.out.println("ENTERO("+yytext()+")");}
 {REAL}            {System.out.println("REAL("+yytext()+")");}
 {SEPARADOR}       {System.out.println("SEPARADOR("+yytext()+")");}
 {OPERADOR}        {System.out.println("OPERADOR("+yytext()+")");}
@@ -89,7 +86,7 @@ PYTHON = {IDENTACION} | ({IDENTIFICADOR} | {OPERADOR} | {BOOLEANO} |{ENTERO} | {
 							     System.out.print("INDENT(" + (current_line_indent) + ")");
                   }else if(current_line_indent < top()){
 	                 pop();
-	                 System.out.println("DEDENT");}	
+	                 System.out.println("DEDENT");}
                   } 
 
 
