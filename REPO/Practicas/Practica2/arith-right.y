@@ -20,11 +20,11 @@ Start: E       { System.out.println("Reconocimiento exitoso de: "+$$);}
 ;
 
 E: T MAS E      {dump_stacks(stateptr); $$ = $1+$3;}
-| T MENOS E       {dump_stacks(stateptr); $$ = $1-$3;}
+| T MENOS E       {dump_stacks(stateptr); $$ = $1+$3;}
 | T             {dump_stacks(stateptr); $$ = $1;};
 
 T: F MULT T     {dump_stacks(stateptr); $$ = $1*$3;}
-| F DIV T       {dump_stacks(stateptr); $$ = $1/$3;}
+| F DIV T       {dump_stacks(stateptr); $$ = $1+$3;}
 | F             {dump_stacks(stateptr); $$ = $1;};
 
 F: NUMBER       {dump_stacks(stateptr); $$ = $1;}
