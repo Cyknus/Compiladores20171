@@ -3,19 +3,35 @@
   import java.io.*;
 %}
 /* YACC Declarations */
-%token<sval> ELT
-%type<sval> List Start
+%token<ival> NUMBER
+%token<sval>MAS 
+%token<sval>MENOS
+%token<sval>DIV
+%token<sval> MULT
+%type<ival> Start
+%type<ival> E
+%type<ival> T 
+%type<ival> F
+
+
 /* Grammar follows  --- LEFT RECURSION --- */
 %%
-Start: List                        { dump_stacks(stateptr); System.out.println("Reconocimiento exitoso de: "+$$);}
+Start: E       { dump_stacks(stateptr); System.out.println("Reconocimiento exitoso de: "+$$);}
 ;
-/* List:  ELT | List ELT   */
-List:   ELT                       {dump_stacks(stateptr); $$ = $1 ;}
-      | List ELT                  {dump_stacks(stateptr); $$ = $1+$2;}
+E: E MAS T      {dump_stacks(stateptr); $$ = $1+$3;}
+| E MENOS T     {dump_stacks(stateptr); $$ = $1-$3;}
+| T             {dump_stacks(stateptr); $$ = $1;};
+
+T: T MULT F     {dump_stacks(stateptr); $$ = $1*$3;}
+| T DIV F       {dump_stacks(stateptr); $$ = $1/$3;}
+| F             {dump_stacks(stateptr); $$ = $1;};
+
+F: NUMBER       {dump_stacks(stateptr); $$ = $1;}
+| MENOS NUMBER  {dump_stacks(stateptr); $$ = $2;};
 ;
 %%
 /* a reference to the lexer object */
-private List lexer;
+private Tokens lexer;
 
 /* interface to the lexer */
 private int yylex () {
@@ -36,8 +52,7 @@ public void yyerror (String error) {
 
 /* lexer is created in the constructor */
 public Parser(Reader r) {
-    lexer = new List(r, this);
-    yydebug = true;
+    lexer = new Tokens(r, this);
 }
 
 /* that's how you use the parser */

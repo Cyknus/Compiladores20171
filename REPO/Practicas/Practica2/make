@@ -1,0 +1,9 @@
+left:
+	byacc -J -dv arith-left.y && jflex Tokens.flex
+	javac Parser.java && javac Tokens.java
+	java Parser po.py
+
+rigth:
+	byacc -J -dv arith-right.y && jflex Tokens.flex
+	javac Parser.java && javac Tokens.java
+	java Parser po.py

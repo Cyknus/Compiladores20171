@@ -6,7 +6,7 @@ import java.util.Stack;
 import java.util.Arrays;
 %%
 %public
-%class List
+%class Tokens
 %byaccj
 %line
 %unicode
@@ -18,15 +18,24 @@ import java.util.Arrays;
     * @param FileReader r
     * @param Parser parser - parser
     */
-    public List(java.io.Reader r, Parser parser){
+    public Tokens(java.io.Reader r, Parser parser){
     	   this(r);
     	   this.yyparser = parser;
     }
 
 %}
-KEYWORD = 'if' | 'else' 
+NUMBER = [1-9]
+MAS = "+"
+MENOS = "-"
+DIV = "/"
+MULT = "*"
 %%
-e					{ yyparser.yylval = new ParserVal(yytext());
-					 return Parser.ELT;}
-<<EOF>>           			{ return 0;}
+
+{NUMBER}				{return Parser.NUMBER;}
+{MAS}					{return Parser.MAS;}
+{MENOS}					{return Parser.MENOS;}
+{DIV}					{return Parser.DIV;}
+{MULT}					{return Parser.MULT;}
+
+<<EOF>>           			{return 0;}
 [^]					{}
