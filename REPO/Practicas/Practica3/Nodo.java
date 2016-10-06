@@ -15,13 +15,13 @@ class Hoja extends Nodo{
 }
 
 class HojaEntera extends Hoja{
+	String entero;
 
-	int entero;
-	public HojaEntera(){
-		int entero;
+	public HojaEntera(String valor){
+		this.entero = valor;
 	}
 
-	public void getEntero(int a){
-		this.entero = a;
+	public String getEntero(){
+		return entero;
 	} 
 }

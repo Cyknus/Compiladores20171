@@ -1,6 +1,7 @@
 %{
   import java.lang.Math;
   import java.io.*;
+
 %}
 /* YACC Declarations */
 %token NEWLINE IDENTIFIER ENTERO REAL CADENA
@@ -12,25 +13,26 @@
 /* Grammar follows */
 %%
  /* stmt: (simple_stmt)* ENDMARKER */
-stmt:  { System.out.println("Reconocimiento Exitoso");}
+stmt:  $$ = $1 { System.out.println("Reconocimiento Exitoso de:"+$$);}
       | aux0 { System.out.println("Reconocimiento Exitoso");}
 ;
 
-aux0:  simple_stmt
+aux0:  simple_stmt $$ = $1
      | aux0 simple_stmt
 ;
 
 /* simple_stmt: small_stmt NEWLINE */
-simple_stmt:  small_stmt NEWLINE
+simple_stmt:  samll_stmt $$ = $1
+          | small_stmt NEWLINE
 ;
 
 /* small_stmt: expr_stmt | print_stmt  */
-small_stmt:  expr_stmt
+small_stmt:  expr_stmt $$ = $1
            | print_stmt
 ;
 
 /* expr_stmt: test ['=' test] */
-expr_stmt:  test
+expr_stmt:  test $$ = $1
            | test EQ test
 ;
 
@@ -40,7 +42,7 @@ print_stmt: PRINT
 ;
 
 /* test: term (('+'|'-') term)* */
-test:  term
+test:  term $$ = $1
      | term aux8
 ;
 aux8:  MAS term
@@ -49,7 +51,7 @@ aux8:  MAS term
      | aux8 MENOS term 
 ;
 /* term: factor (('*'|'/'|'%'|'//') factor)* */
-term:  factor
+term:  factor $$ = $1
       | factor aux9
 ;
 aux9:  POR factor
@@ -64,16 +66,16 @@ aux9:  POR factor
 /* factor: ('+'|'-') factor | power */
 factor:  MAS factor
        | MENOS factor
-       | power
+       | power $$ = $1
 ;
 /* power: atom ['**' factor] */
-power:  atom
+power:  atom $$ = $1
       | atom POTENCIA factor
 ;
 
 /* atom: IDENTIFIER | INTEGER | STRING | FLOAT */
 atom:  IDENTIFIER
-     | ENTERO
+     | ENTERO  $$ = new HojaEntera($1);$$ getEntero()
      | CADENA
      | REAL
      | BOOLEAN
