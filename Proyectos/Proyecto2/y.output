@@ -1,0 +1,1965 @@
+   0  $accept : file_input $end
+
+   1  file_input :
+   2             | aux0
+
+   3  aux0 : stmt
+   4       | aux0 stmt
+
+   5  stmt : simple_stmt
+   6       | compound_stmt
+
+   7  simple_stmt : small_stmt
+   8              | small_stmt NEWLINE
+
+   9  small_stmt : expr_stmt
+  10             | print_stmt
+
+  11  expr_stmt : test
+  12            | test EQ test
+  13            | test augassign test
+
+  14  augassign : MASEQ
+  15            | MENOSEQ
+
+  16  print_stmt : PRINT
+  17             | PRINT test
+
+  18  compound_stmt : if_stmt
+  19                | while_stmt
+
+  20  if_stmt : IF test DOSPUNT suite
+  21          | IF test DOSPUNT suite ELSE DOSPUNT suite
+  22          | IF test DOSPUNT suite aux1 ELSE DOSPUNT suite
+
+  23  aux1 : ELIF test DOSPUNT suite
+  24       | aux1 ELIF test DOSPUNT suite
+
+  25  while_stmt : WHILE test DOSPUNT suite
+
+  26  suite : simple_stmt
+  27        | NEWLINE INDENT aux2 DEDENT
+
+  28  aux2 : stmt
+  29       | aux2 stmt
+
+  30  test : or_test
+
+  31  or_test : and_test
+  32          | and_test aux3
+
+  33  aux3 : OR and_test
+  34       | aux3 OR and_test
+
+  35  and_test : not_test
+  36           | not_test aux4
+
+  37  aux4 : OR not_test
+  38       | aux4 OR not_test
+
+  39  not_test : NOT not_test
+  40           | comparison
+
+  41  comparison : expr
+  42             | expr aux5
+
+  43  aux5 : comp_op expr
+  44       | aux5 comp_op expr
+
+  45  comp_op : MENORQ
+  46          | MAYORQ
+  47          | EQEQ
+  48          | MAYOREQ
+  49          | MENOREQ
+  50          | DIF
+  51          | IN
+  52          | NOT IN
+
+  53  expr : term
+  54       | term aux6
+
+  55  aux6 : MAS term
+  56       | MENOS term
+  57       | aux6 MAS term
+  58       | aux6 MENOS term
+
+  59  term : factor
+  60       | factor aux7
+
+  61  aux7 : POR factor
+  62       | DIVENTERA factor
+  63       | MODULO factor
+  64       | DIV factor
+  65       | aux7 POR factor
+  66       | aux7 DIVENTERA factor
+  67       | aux7 MODULO factor
+  68       | aux7 DIV factor
+
+  69  factor : MAS factor
+  70         | MENOS factor
+  71         | power
+
+  72  power : atom
+  73        | atom POTENCIA factor
+
+  74  atom : IDENTIFIER
+  75       | ENTERO
+  76       | CADENA
+  77       | REAL
+  78       | BOOLEAN
+
+state 0
+	$accept : . file_input $end  (0)
+	file_input : .  (1)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	IF  shift 9
+	WHILE  shift 10
+	NOT  shift 11
+	$end  reduce 1
+
+	file_input  goto 12
+	aux0  goto 13
+	stmt  goto 14
+	simple_stmt  goto 15
+	compound_stmt  goto 16
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	if_stmt  goto 21
+	while_stmt  goto 22
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 1
+	atom : IDENTIFIER .  (74)
+
+	.  reduce 74
+
+
+state 2
+	atom : ENTERO .  (75)
+
+	.  reduce 75
+
+
+state 3
+	atom : REAL .  (77)
+
+	.  reduce 77
+
+
+state 4
+	atom : CADENA .  (76)
+
+	.  reduce 76
+
+
+state 5
+	atom : BOOLEAN .  (78)
+
+	.  reduce 78
+
+
+6: shift/reduce conflict (shift 1, reduce 16) on IDENTIFIER
+6: shift/reduce conflict (shift 2, reduce 16) on ENTERO
+6: shift/reduce conflict (shift 3, reduce 16) on REAL
+6: shift/reduce conflict (shift 4, reduce 16) on CADENA
+6: shift/reduce conflict (shift 5, reduce 16) on BOOLEAN
+6: shift/reduce conflict (shift 7, reduce 16) on MAS
+6: shift/reduce conflict (shift 8, reduce 16) on MENOS
+6: shift/reduce conflict (shift 11, reduce 16) on NOT
+state 6
+	print_stmt : PRINT .  (16)
+	print_stmt : PRINT . test  (17)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	$end  reduce 16
+	NEWLINE  reduce 16
+	PRINT  reduce 16
+	DEDENT  reduce 16
+	IF  reduce 16
+	ELIF  reduce 16
+	ELSE  reduce 16
+	WHILE  reduce 16
+
+	test  goto 32
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 7
+	factor : MAS . factor  (69)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 33
+	power  goto 30
+	atom  goto 31
+
+
+state 8
+	factor : MENOS . factor  (70)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 34
+	power  goto 30
+	atom  goto 31
+
+
+state 9
+	if_stmt : IF . test DOSPUNT suite  (20)
+	if_stmt : IF . test DOSPUNT suite ELSE DOSPUNT suite  (21)
+	if_stmt : IF . test DOSPUNT suite aux1 ELSE DOSPUNT suite  (22)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	test  goto 35
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 10
+	while_stmt : WHILE . test DOSPUNT suite  (25)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	test  goto 36
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 11
+	not_test : NOT . not_test  (39)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	not_test  goto 37
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 12
+	$accept : file_input . $end  (0)
+
+	$end  accept
+
+
+state 13
+	file_input : aux0 .  (2)
+	aux0 : aux0 . stmt  (4)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	IF  shift 9
+	WHILE  shift 10
+	NOT  shift 11
+	$end  reduce 2
+
+	stmt  goto 38
+	simple_stmt  goto 15
+	compound_stmt  goto 16
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	if_stmt  goto 21
+	while_stmt  goto 22
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 14
+	aux0 : stmt .  (3)
+
+	.  reduce 3
+
+
+state 15
+	stmt : simple_stmt .  (5)
+
+	.  reduce 5
+
+
+state 16
+	stmt : compound_stmt .  (6)
+
+	.  reduce 6
+
+
+state 17
+	simple_stmt : small_stmt .  (7)
+	simple_stmt : small_stmt . NEWLINE  (8)
+
+	NEWLINE  shift 39
+	$end  reduce 7
+	IDENTIFIER  reduce 7
+	ENTERO  reduce 7
+	REAL  reduce 7
+	CADENA  reduce 7
+	BOOLEAN  reduce 7
+	PRINT  reduce 7
+	DEDENT  reduce 7
+	MAS  reduce 7
+	MENOS  reduce 7
+	IF  reduce 7
+	ELIF  reduce 7
+	ELSE  reduce 7
+	WHILE  reduce 7
+	NOT  reduce 7
+
+
+state 18
+	small_stmt : expr_stmt .  (9)
+
+	.  reduce 9
+
+
+state 19
+	small_stmt : print_stmt .  (10)
+
+	.  reduce 10
+
+
+state 20
+	expr_stmt : test .  (11)
+	expr_stmt : test . EQ test  (12)
+	expr_stmt : test . augassign test  (13)
+
+	EQ  shift 40
+	MASEQ  shift 41
+	MENOSEQ  shift 42
+	$end  reduce 11
+	NEWLINE  reduce 11
+	IDENTIFIER  reduce 11
+	ENTERO  reduce 11
+	REAL  reduce 11
+	CADENA  reduce 11
+	BOOLEAN  reduce 11
+	PRINT  reduce 11
+	DEDENT  reduce 11
+	MAS  reduce 11
+	MENOS  reduce 11
+	IF  reduce 11
+	ELIF  reduce 11
+	ELSE  reduce 11
+	WHILE  reduce 11
+	NOT  reduce 11
+
+	augassign  goto 43
+
+
+state 21
+	compound_stmt : if_stmt .  (18)
+
+	.  reduce 18
+
+
+state 22
+	compound_stmt : while_stmt .  (19)
+
+	.  reduce 19
+
+
+state 23
+	test : or_test .  (30)
+
+	.  reduce 30
+
+
+state 24
+	or_test : and_test .  (31)
+	or_test : and_test . aux3  (32)
+
+	OR  shift 44
+	$end  reduce 31
+	NEWLINE  reduce 31
+	IDENTIFIER  reduce 31
+	ENTERO  reduce 31
+	REAL  reduce 31
+	CADENA  reduce 31
+	BOOLEAN  reduce 31
+	PRINT  reduce 31
+	DEDENT  reduce 31
+	MAS  reduce 31
+	MENOS  reduce 31
+	EQ  reduce 31
+	MASEQ  reduce 31
+	MENOSEQ  reduce 31
+	DOSPUNT  reduce 31
+	IF  reduce 31
+	ELIF  reduce 31
+	ELSE  reduce 31
+	WHILE  reduce 31
+	NOT  reduce 31
+
+	aux3  goto 45
+
+
+25: shift/reduce conflict (shift 46, reduce 35) on OR
+state 25
+	and_test : not_test .  (35)
+	and_test : not_test . aux4  (36)
+
+	OR  shift 46
+	$end  reduce 35
+	NEWLINE  reduce 35
+	IDENTIFIER  reduce 35
+	ENTERO  reduce 35
+	REAL  reduce 35
+	CADENA  reduce 35
+	BOOLEAN  reduce 35
+	PRINT  reduce 35
+	DEDENT  reduce 35
+	MAS  reduce 35
+	MENOS  reduce 35
+	EQ  reduce 35
+	MASEQ  reduce 35
+	MENOSEQ  reduce 35
+	DOSPUNT  reduce 35
+	IF  reduce 35
+	ELIF  reduce 35
+	ELSE  reduce 35
+	WHILE  reduce 35
+	NOT  reduce 35
+
+	aux4  goto 47
+
+
+state 26
+	not_test : comparison .  (40)
+
+	.  reduce 40
+
+
+27: shift/reduce conflict (shift 54, reduce 41) on NOT
+state 27
+	comparison : expr .  (41)
+	comparison : expr . aux5  (42)
+
+	MENORQ  shift 48
+	MAYORQ  shift 49
+	MENOREQ  shift 50
+	MAYOREQ  shift 51
+	EQEQ  shift 52
+	DIF  shift 53
+	NOT  shift 54
+	IN  shift 55
+	$end  reduce 41
+	NEWLINE  reduce 41
+	IDENTIFIER  reduce 41
+	ENTERO  reduce 41
+	REAL  reduce 41
+	CADENA  reduce 41
+	BOOLEAN  reduce 41
+	PRINT  reduce 41
+	DEDENT  reduce 41
+	MAS  reduce 41
+	MENOS  reduce 41
+	EQ  reduce 41
+	MASEQ  reduce 41
+	MENOSEQ  reduce 41
+	DOSPUNT  reduce 41
+	IF  reduce 41
+	ELIF  reduce 41
+	ELSE  reduce 41
+	WHILE  reduce 41
+	OR  reduce 41
+
+	aux5  goto 56
+	comp_op  goto 57
+
+
+28: shift/reduce conflict (shift 58, reduce 53) on MAS
+28: shift/reduce conflict (shift 59, reduce 53) on MENOS
+state 28
+	expr : term .  (53)
+	expr : term . aux6  (54)
+
+	MAS  shift 58
+	MENOS  shift 59
+	$end  reduce 53
+	NEWLINE  reduce 53
+	IDENTIFIER  reduce 53
+	ENTERO  reduce 53
+	REAL  reduce 53
+	CADENA  reduce 53
+	BOOLEAN  reduce 53
+	PRINT  reduce 53
+	DEDENT  reduce 53
+	EQ  reduce 53
+	MENORQ  reduce 53
+	MAYORQ  reduce 53
+	MENOREQ  reduce 53
+	MASEQ  reduce 53
+	MENOSEQ  reduce 53
+	MAYOREQ  reduce 53
+	EQEQ  reduce 53
+	DIF  reduce 53
+	DOSPUNT  reduce 53
+	IF  reduce 53
+	ELIF  reduce 53
+	ELSE  reduce 53
+	WHILE  reduce 53
+	OR  reduce 53
+	NOT  reduce 53
+	IN  reduce 53
+
+	aux6  goto 60
+
+
+state 29
+	term : factor .  (59)
+	term : factor . aux7  (60)
+
+	POR  shift 61
+	DIV  shift 62
+	DIVENTERA  shift 63
+	MODULO  shift 64
+	$end  reduce 59
+	NEWLINE  reduce 59
+	IDENTIFIER  reduce 59
+	ENTERO  reduce 59
+	REAL  reduce 59
+	CADENA  reduce 59
+	BOOLEAN  reduce 59
+	PRINT  reduce 59
+	DEDENT  reduce 59
+	MAS  reduce 59
+	MENOS  reduce 59
+	EQ  reduce 59
+	MENORQ  reduce 59
+	MAYORQ  reduce 59
+	MENOREQ  reduce 59
+	MASEQ  reduce 59
+	MENOSEQ  reduce 59
+	MAYOREQ  reduce 59
+	EQEQ  reduce 59
+	DIF  reduce 59
+	DOSPUNT  reduce 59
+	IF  reduce 59
+	ELIF  reduce 59
+	ELSE  reduce 59
+	WHILE  reduce 59
+	OR  reduce 59
+	NOT  reduce 59
+	IN  reduce 59
+
+	aux7  goto 65
+
+
+state 30
+	factor : power .  (71)
+
+	.  reduce 71
+
+
+state 31
+	power : atom .  (72)
+	power : atom . POTENCIA factor  (73)
+
+	POTENCIA  shift 66
+	$end  reduce 72
+	NEWLINE  reduce 72
+	IDENTIFIER  reduce 72
+	ENTERO  reduce 72
+	REAL  reduce 72
+	CADENA  reduce 72
+	BOOLEAN  reduce 72
+	PRINT  reduce 72
+	DEDENT  reduce 72
+	MAS  reduce 72
+	MENOS  reduce 72
+	POR  reduce 72
+	DIV  reduce 72
+	DIVENTERA  reduce 72
+	MODULO  reduce 72
+	EQ  reduce 72
+	MENORQ  reduce 72
+	MAYORQ  reduce 72
+	MENOREQ  reduce 72
+	MASEQ  reduce 72
+	MENOSEQ  reduce 72
+	MAYOREQ  reduce 72
+	EQEQ  reduce 72
+	DIF  reduce 72
+	DOSPUNT  reduce 72
+	IF  reduce 72
+	ELIF  reduce 72
+	ELSE  reduce 72
+	WHILE  reduce 72
+	OR  reduce 72
+	NOT  reduce 72
+	IN  reduce 72
+
+
+state 32
+	print_stmt : PRINT test .  (17)
+
+	.  reduce 17
+
+
+state 33
+	factor : MAS factor .  (69)
+
+	.  reduce 69
+
+
+state 34
+	factor : MENOS factor .  (70)
+
+	.  reduce 70
+
+
+state 35
+	if_stmt : IF test . DOSPUNT suite  (20)
+	if_stmt : IF test . DOSPUNT suite ELSE DOSPUNT suite  (21)
+	if_stmt : IF test . DOSPUNT suite aux1 ELSE DOSPUNT suite  (22)
+
+	DOSPUNT  shift 67
+	.  error
+
+
+state 36
+	while_stmt : WHILE test . DOSPUNT suite  (25)
+
+	DOSPUNT  shift 68
+	.  error
+
+
+state 37
+	not_test : NOT not_test .  (39)
+
+	.  reduce 39
+
+
+state 38
+	aux0 : aux0 stmt .  (4)
+
+	.  reduce 4
+
+
+state 39
+	simple_stmt : small_stmt NEWLINE .  (8)
+
+	.  reduce 8
+
+
+state 40
+	expr_stmt : test EQ . test  (12)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	test  goto 69
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 41
+	augassign : MASEQ .  (14)
+
+	.  reduce 14
+
+
+state 42
+	augassign : MENOSEQ .  (15)
+
+	.  reduce 15
+
+
+state 43
+	expr_stmt : test augassign . test  (13)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	test  goto 70
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 44
+	aux3 : OR . and_test  (33)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	and_test  goto 71
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 45
+	or_test : and_test aux3 .  (32)
+	aux3 : aux3 . OR and_test  (34)
+
+	OR  shift 72
+	$end  reduce 32
+	NEWLINE  reduce 32
+	IDENTIFIER  reduce 32
+	ENTERO  reduce 32
+	REAL  reduce 32
+	CADENA  reduce 32
+	BOOLEAN  reduce 32
+	PRINT  reduce 32
+	DEDENT  reduce 32
+	MAS  reduce 32
+	MENOS  reduce 32
+	EQ  reduce 32
+	MASEQ  reduce 32
+	MENOSEQ  reduce 32
+	DOSPUNT  reduce 32
+	IF  reduce 32
+	ELIF  reduce 32
+	ELSE  reduce 32
+	WHILE  reduce 32
+	NOT  reduce 32
+
+
+state 46
+	aux4 : OR . not_test  (37)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	not_test  goto 73
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+47: shift/reduce conflict (shift 74, reduce 36) on OR
+state 47
+	and_test : not_test aux4 .  (36)
+	aux4 : aux4 . OR not_test  (38)
+
+	OR  shift 74
+	$end  reduce 36
+	NEWLINE  reduce 36
+	IDENTIFIER  reduce 36
+	ENTERO  reduce 36
+	REAL  reduce 36
+	CADENA  reduce 36
+	BOOLEAN  reduce 36
+	PRINT  reduce 36
+	DEDENT  reduce 36
+	MAS  reduce 36
+	MENOS  reduce 36
+	EQ  reduce 36
+	MASEQ  reduce 36
+	MENOSEQ  reduce 36
+	DOSPUNT  reduce 36
+	IF  reduce 36
+	ELIF  reduce 36
+	ELSE  reduce 36
+	WHILE  reduce 36
+	NOT  reduce 36
+
+
+state 48
+	comp_op : MENORQ .  (45)
+
+	.  reduce 45
+
+
+state 49
+	comp_op : MAYORQ .  (46)
+
+	.  reduce 46
+
+
+state 50
+	comp_op : MENOREQ .  (49)
+
+	.  reduce 49
+
+
+state 51
+	comp_op : MAYOREQ .  (48)
+
+	.  reduce 48
+
+
+state 52
+	comp_op : EQEQ .  (47)
+
+	.  reduce 47
+
+
+state 53
+	comp_op : DIF .  (50)
+
+	.  reduce 50
+
+
+state 54
+	comp_op : NOT . IN  (52)
+
+	IN  shift 75
+	.  error
+
+
+state 55
+	comp_op : IN .  (51)
+
+	.  reduce 51
+
+
+56: shift/reduce conflict (shift 54, reduce 42) on NOT
+state 56
+	comparison : expr aux5 .  (42)
+	aux5 : aux5 . comp_op expr  (44)
+
+	MENORQ  shift 48
+	MAYORQ  shift 49
+	MENOREQ  shift 50
+	MAYOREQ  shift 51
+	EQEQ  shift 52
+	DIF  shift 53
+	NOT  shift 54
+	IN  shift 55
+	$end  reduce 42
+	NEWLINE  reduce 42
+	IDENTIFIER  reduce 42
+	ENTERO  reduce 42
+	REAL  reduce 42
+	CADENA  reduce 42
+	BOOLEAN  reduce 42
+	PRINT  reduce 42
+	DEDENT  reduce 42
+	MAS  reduce 42
+	MENOS  reduce 42
+	EQ  reduce 42
+	MASEQ  reduce 42
+	MENOSEQ  reduce 42
+	DOSPUNT  reduce 42
+	IF  reduce 42
+	ELIF  reduce 42
+	ELSE  reduce 42
+	WHILE  reduce 42
+	OR  reduce 42
+
+	comp_op  goto 76
+
+
+state 57
+	aux5 : comp_op . expr  (43)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	expr  goto 77
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 58
+	aux6 : MAS . term  (55)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	term  goto 78
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 59
+	aux6 : MENOS . term  (56)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	term  goto 79
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+60: shift/reduce conflict (shift 80, reduce 54) on MAS
+60: shift/reduce conflict (shift 81, reduce 54) on MENOS
+state 60
+	expr : term aux6 .  (54)
+	aux6 : aux6 . MAS term  (57)
+	aux6 : aux6 . MENOS term  (58)
+
+	MAS  shift 80
+	MENOS  shift 81
+	$end  reduce 54
+	NEWLINE  reduce 54
+	IDENTIFIER  reduce 54
+	ENTERO  reduce 54
+	REAL  reduce 54
+	CADENA  reduce 54
+	BOOLEAN  reduce 54
+	PRINT  reduce 54
+	DEDENT  reduce 54
+	EQ  reduce 54
+	MENORQ  reduce 54
+	MAYORQ  reduce 54
+	MENOREQ  reduce 54
+	MASEQ  reduce 54
+	MENOSEQ  reduce 54
+	MAYOREQ  reduce 54
+	EQEQ  reduce 54
+	DIF  reduce 54
+	DOSPUNT  reduce 54
+	IF  reduce 54
+	ELIF  reduce 54
+	ELSE  reduce 54
+	WHILE  reduce 54
+	OR  reduce 54
+	NOT  reduce 54
+	IN  reduce 54
+
+
+state 61
+	aux7 : POR . factor  (61)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 82
+	power  goto 30
+	atom  goto 31
+
+
+state 62
+	aux7 : DIV . factor  (64)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 83
+	power  goto 30
+	atom  goto 31
+
+
+state 63
+	aux7 : DIVENTERA . factor  (62)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 84
+	power  goto 30
+	atom  goto 31
+
+
+state 64
+	aux7 : MODULO . factor  (63)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 85
+	power  goto 30
+	atom  goto 31
+
+
+state 65
+	term : factor aux7 .  (60)
+	aux7 : aux7 . POR factor  (65)
+	aux7 : aux7 . DIVENTERA factor  (66)
+	aux7 : aux7 . MODULO factor  (67)
+	aux7 : aux7 . DIV factor  (68)
+
+	POR  shift 86
+	DIV  shift 87
+	DIVENTERA  shift 88
+	MODULO  shift 89
+	$end  reduce 60
+	NEWLINE  reduce 60
+	IDENTIFIER  reduce 60
+	ENTERO  reduce 60
+	REAL  reduce 60
+	CADENA  reduce 60
+	BOOLEAN  reduce 60
+	PRINT  reduce 60
+	DEDENT  reduce 60
+	MAS  reduce 60
+	MENOS  reduce 60
+	EQ  reduce 60
+	MENORQ  reduce 60
+	MAYORQ  reduce 60
+	MENOREQ  reduce 60
+	MASEQ  reduce 60
+	MENOSEQ  reduce 60
+	MAYOREQ  reduce 60
+	EQEQ  reduce 60
+	DIF  reduce 60
+	DOSPUNT  reduce 60
+	IF  reduce 60
+	ELIF  reduce 60
+	ELSE  reduce 60
+	WHILE  reduce 60
+	OR  reduce 60
+	NOT  reduce 60
+	IN  reduce 60
+
+
+state 66
+	power : atom POTENCIA . factor  (73)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 90
+	power  goto 30
+	atom  goto 31
+
+
+state 67
+	if_stmt : IF test DOSPUNT . suite  (20)
+	if_stmt : IF test DOSPUNT . suite ELSE DOSPUNT suite  (21)
+	if_stmt : IF test DOSPUNT . suite aux1 ELSE DOSPUNT suite  (22)
+
+	NEWLINE  shift 91
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	simple_stmt  goto 92
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	suite  goto 93
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 68
+	while_stmt : WHILE test DOSPUNT . suite  (25)
+
+	NEWLINE  shift 91
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	simple_stmt  goto 92
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	suite  goto 94
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 69
+	expr_stmt : test EQ test .  (12)
+
+	.  reduce 12
+
+
+state 70
+	expr_stmt : test augassign test .  (13)
+
+	.  reduce 13
+
+
+state 71
+	aux3 : OR and_test .  (33)
+
+	.  reduce 33
+
+
+state 72
+	aux3 : aux3 OR . and_test  (34)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	and_test  goto 95
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 73
+	aux4 : OR not_test .  (37)
+
+	.  reduce 37
+
+
+state 74
+	aux4 : aux4 OR . not_test  (38)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	not_test  goto 96
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 75
+	comp_op : NOT IN .  (52)
+
+	.  reduce 52
+
+
+state 76
+	aux5 : aux5 comp_op . expr  (44)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	expr  goto 97
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 77
+	aux5 : comp_op expr .  (43)
+
+	.  reduce 43
+
+
+state 78
+	aux6 : MAS term .  (55)
+
+	.  reduce 55
+
+
+state 79
+	aux6 : MENOS term .  (56)
+
+	.  reduce 56
+
+
+state 80
+	aux6 : aux6 MAS . term  (57)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	term  goto 98
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 81
+	aux6 : aux6 MENOS . term  (58)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	term  goto 99
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 82
+	aux7 : POR factor .  (61)
+
+	.  reduce 61
+
+
+state 83
+	aux7 : DIV factor .  (64)
+
+	.  reduce 64
+
+
+state 84
+	aux7 : DIVENTERA factor .  (62)
+
+	.  reduce 62
+
+
+state 85
+	aux7 : MODULO factor .  (63)
+
+	.  reduce 63
+
+
+state 86
+	aux7 : aux7 POR . factor  (65)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 100
+	power  goto 30
+	atom  goto 31
+
+
+state 87
+	aux7 : aux7 DIV . factor  (68)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 101
+	power  goto 30
+	atom  goto 31
+
+
+state 88
+	aux7 : aux7 DIVENTERA . factor  (66)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 102
+	power  goto 30
+	atom  goto 31
+
+
+state 89
+	aux7 : aux7 MODULO . factor  (67)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	.  error
+
+	factor  goto 103
+	power  goto 30
+	atom  goto 31
+
+
+state 90
+	power : atom POTENCIA factor .  (73)
+
+	.  reduce 73
+
+
+state 91
+	suite : NEWLINE . INDENT aux2 DEDENT  (27)
+
+	INDENT  shift 104
+	.  error
+
+
+state 92
+	suite : simple_stmt .  (26)
+
+	.  reduce 26
+
+
+state 93
+	if_stmt : IF test DOSPUNT suite .  (20)
+	if_stmt : IF test DOSPUNT suite . ELSE DOSPUNT suite  (21)
+	if_stmt : IF test DOSPUNT suite . aux1 ELSE DOSPUNT suite  (22)
+
+	ELIF  shift 105
+	ELSE  shift 106
+	$end  reduce 20
+	IDENTIFIER  reduce 20
+	ENTERO  reduce 20
+	REAL  reduce 20
+	CADENA  reduce 20
+	BOOLEAN  reduce 20
+	PRINT  reduce 20
+	DEDENT  reduce 20
+	MAS  reduce 20
+	MENOS  reduce 20
+	IF  reduce 20
+	WHILE  reduce 20
+	NOT  reduce 20
+
+	aux1  goto 107
+
+
+state 94
+	while_stmt : WHILE test DOSPUNT suite .  (25)
+
+	.  reduce 25
+
+
+state 95
+	aux3 : aux3 OR and_test .  (34)
+
+	.  reduce 34
+
+
+state 96
+	aux4 : aux4 OR not_test .  (38)
+
+	.  reduce 38
+
+
+state 97
+	aux5 : aux5 comp_op expr .  (44)
+
+	.  reduce 44
+
+
+state 98
+	aux6 : aux6 MAS term .  (57)
+
+	.  reduce 57
+
+
+state 99
+	aux6 : aux6 MENOS term .  (58)
+
+	.  reduce 58
+
+
+state 100
+	aux7 : aux7 POR factor .  (65)
+
+	.  reduce 65
+
+
+state 101
+	aux7 : aux7 DIV factor .  (68)
+
+	.  reduce 68
+
+
+state 102
+	aux7 : aux7 DIVENTERA factor .  (66)
+
+	.  reduce 66
+
+
+state 103
+	aux7 : aux7 MODULO factor .  (67)
+
+	.  reduce 67
+
+
+state 104
+	suite : NEWLINE INDENT . aux2 DEDENT  (27)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	IF  shift 9
+	WHILE  shift 10
+	NOT  shift 11
+	.  error
+
+	stmt  goto 108
+	simple_stmt  goto 15
+	compound_stmt  goto 16
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	if_stmt  goto 21
+	while_stmt  goto 22
+	aux2  goto 109
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 105
+	aux1 : ELIF . test DOSPUNT suite  (23)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	test  goto 110
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 106
+	if_stmt : IF test DOSPUNT suite ELSE . DOSPUNT suite  (21)
+
+	DOSPUNT  shift 111
+	.  error
+
+
+state 107
+	if_stmt : IF test DOSPUNT suite aux1 . ELSE DOSPUNT suite  (22)
+	aux1 : aux1 . ELIF test DOSPUNT suite  (24)
+
+	ELIF  shift 112
+	ELSE  shift 113
+	.  error
+
+
+state 108
+	aux2 : stmt .  (28)
+
+	.  reduce 28
+
+
+state 109
+	suite : NEWLINE INDENT aux2 . DEDENT  (27)
+	aux2 : aux2 . stmt  (29)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	DEDENT  shift 114
+	MAS  shift 7
+	MENOS  shift 8
+	IF  shift 9
+	WHILE  shift 10
+	NOT  shift 11
+	.  error
+
+	stmt  goto 115
+	simple_stmt  goto 15
+	compound_stmt  goto 16
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	if_stmt  goto 21
+	while_stmt  goto 22
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 110
+	aux1 : ELIF test . DOSPUNT suite  (23)
+
+	DOSPUNT  shift 116
+	.  error
+
+
+state 111
+	if_stmt : IF test DOSPUNT suite ELSE DOSPUNT . suite  (21)
+
+	NEWLINE  shift 91
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	simple_stmt  goto 92
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	suite  goto 117
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 112
+	aux1 : aux1 ELIF . test DOSPUNT suite  (24)
+
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	test  goto 118
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 113
+	if_stmt : IF test DOSPUNT suite aux1 ELSE . DOSPUNT suite  (22)
+
+	DOSPUNT  shift 119
+	.  error
+
+
+state 114
+	suite : NEWLINE INDENT aux2 DEDENT .  (27)
+
+	.  reduce 27
+
+
+state 115
+	aux2 : aux2 stmt .  (29)
+
+	.  reduce 29
+
+
+state 116
+	aux1 : ELIF test DOSPUNT . suite  (23)
+
+	NEWLINE  shift 91
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	simple_stmt  goto 92
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	suite  goto 120
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 117
+	if_stmt : IF test DOSPUNT suite ELSE DOSPUNT suite .  (21)
+
+	.  reduce 21
+
+
+state 118
+	aux1 : aux1 ELIF test . DOSPUNT suite  (24)
+
+	DOSPUNT  shift 121
+	.  error
+
+
+state 119
+	if_stmt : IF test DOSPUNT suite aux1 ELSE DOSPUNT . suite  (22)
+
+	NEWLINE  shift 91
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	simple_stmt  goto 92
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	suite  goto 122
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 120
+	aux1 : ELIF test DOSPUNT suite .  (23)
+
+	.  reduce 23
+
+
+state 121
+	aux1 : aux1 ELIF test DOSPUNT . suite  (24)
+
+	NEWLINE  shift 91
+	IDENTIFIER  shift 1
+	ENTERO  shift 2
+	REAL  shift 3
+	CADENA  shift 4
+	BOOLEAN  shift 5
+	PRINT  shift 6
+	MAS  shift 7
+	MENOS  shift 8
+	NOT  shift 11
+	.  error
+
+	simple_stmt  goto 92
+	small_stmt  goto 17
+	expr_stmt  goto 18
+	print_stmt  goto 19
+	test  goto 20
+	suite  goto 123
+	or_test  goto 23
+	and_test  goto 24
+	not_test  goto 25
+	comparison  goto 26
+	expr  goto 27
+	term  goto 28
+	factor  goto 29
+	power  goto 30
+	atom  goto 31
+
+
+state 122
+	if_stmt : IF test DOSPUNT suite aux1 ELSE DOSPUNT suite .  (22)
+
+	.  reduce 22
+
+
+state 123
+	aux1 : aux1 ELIF test DOSPUNT suite .  (24)
+
+	.  reduce 24
+
+
+State 6 contains 8 shift/reduce conflicts.
+State 25 contains 1 shift/reduce conflict.
+State 27 contains 1 shift/reduce conflict.
+State 28 contains 2 shift/reduce conflicts.
+State 47 contains 1 shift/reduce conflict.
+State 56 contains 1 shift/reduce conflict.
+State 60 contains 2 shift/reduce conflicts.
+
+
+38 terminals, 31 nonterminals
+79 grammar rules, 124 states

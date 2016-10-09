@@ -1,0 +1,18 @@
+n = 1
+par = 0
+impar = 0
+bol = False
+bol2 = True
+while n <= 100:
+    if n%2 == 0:
+        par += n
+    else:
+        impar += n
+    n += 1
+    print n
+print par
+print impar
+print bol
+print bol2 #ya estuvo
+#este no
+print "Hola ' mu " ndo"
