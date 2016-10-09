@@ -13,19 +13,17 @@
 %token IF ELIF ELSE WHILE /*if | elif | else | while */
 %token OR AND NOT IN /* or | and | not | in */
 %nonassoc THEN
-%nonassoc ELSE
+%left MAS
 
-%right THEN ELSE
+
 
 /* Grammar follows */
 %%
  /* file_input: (NEWLINE | stmt)* ENDMARKER */
-file_input:  { System.out.println("Reconocimiento Exitoso");}
-      | aux0 { System.out.println("Reconocimiento Exitoso");}
+file_input: aux0 { System.out.println("Reconocimiento Exitoso");}
 ;
 
-aux0:  stmt
-     | aux0 stmt
+aux0: aux0 stmt | 
 ;
 
 /* stmt: simple_stmt | compound_stmt */
@@ -55,9 +53,9 @@ augassign:  MASEQ
 ;
 
 /* print_stmt: 'print' [test] */
-print_stmt: PRINT
-          | PRINT test
+print_stmt: PRINT test
 ;
+
 
 /* compound_stmt: if_stmt | while_stmt */
 compound_stmt: if_stmt
@@ -65,14 +63,15 @@ compound_stmt: if_stmt
 ;
 
 /* if_stmt: 'if' test ':' suite ('elif' test ':' suite)* ['else' ':' suite] */
-if_stmt: IF test DOSPUNT suite %prec THEN
-      | IF test DOSPUNT suite ELSE DOSPUNT suite 
-      | IF test DOSPUNT suite aux1 ELSE DOSPUNT suite
+if_stmt: IF test DOSPUNT suite if_stmt_aux aux_else
 ;
 
-aux1: ELIF test DOSPUNT suite 
-      | aux1 ELIF test DOSPUNT suite
+if_stmt_aux:  if_stmt_aux ELIF test DOSPUNT suite |  
 ;
+
+aux_else: ELSE DOSPUNT suite |   
+;
+
 
 /* while_stmt: 'while' test ':' suite */
 while_stmt: WHILE test DOSPUNT suite
@@ -83,31 +82,26 @@ suite: simple_stmt
       | NEWLINE INDENT aux2 DEDENT
 ;
 
-aux2: stmt 
-      | aux2 stmt
+aux2: aux2 stmt
+      | stmt
 ;
 
-
 /* test: or_test */
-test:  or_test 
+test: or_test
 ;
 
 /* or_test: and_test ('or' and_test)* */
-or_test: and_test
-      | and_test aux3
+or_test: and_test aux3
 ;
 
-aux3: OR and_test 
-      | aux3 OR and_test
+aux3: aux3 OR and_test |
 ;
 
 /* and_test: not_test ('and' not_test)* */
-and_test: not_test
-      | not_test aux4
+and_test: not_test aux4
 ;
 
-aux4: OR not_test 
-      | aux4 OR not_test
+aux4: aux4 AND not_test |
 ;
 
 /* not_test: 'not' not_test | comparison */
@@ -116,12 +110,11 @@ not_test: NOT not_test
 ;
 
 /* comparison: expr (comp_op expr)* */
-comparison: expr
-      | expr aux5
+comparison: expr aux5 | expr
 ;
 
-aux5: comp_op expr
-    | aux5 comp_op expr
+aux5: aux5 comp_op expr 
+;
 
 /* comp_op: '<'|'>'|'=='|'>='|'<='|'!='|'in'|'not' 'in' */
 comp_op: MENORQ
@@ -135,38 +128,34 @@ comp_op: MENORQ
 ;
 
 /* expr: term (('+'|'-') term)* */
-expr: term
-      | term aux6
+expr: term aux6
 ;
 
-aux6: MAS term 
-    | MENOS term 
-    | aux6 MAS term
+aux6: aux6 MAS term 
     | aux6 MENOS term
 ;
 
 
 /* term: factor (('*'|'/'|'%'|'//') factor)* */
-term:  factor
-      | factor aux7
+term: factor aux7
 ;
-aux7:  POR factor
-     | DIVENTERA factor
-     | MODULO factor
-     | DIV factor
-     | aux7 POR factor 
+aux7: aux7 POR factor 
      | aux7 DIVENTERA factor
      | aux7 MODULO factor
-     | aux7 DIV factor
+     | aux7 DIV factor |
 ;
 /* factor: ('+'|'-') factor | power */
-factor:  MAS factor
-       | MENOS factor
-       | power
+factor:  factor_aux factor | power
 ;
+
+factor_aux: MAS | MENOS 
+;
+
 /* power: atom ['**' factor] */
-power:  atom
-      | atom POTENCIA factor
+power:  atom power_aux
+;
+
+power_aux: POTENCIA factor | 
 ;
 
 /* atom: IDENTIFIER | INTEGER | STRING | FLOAT */

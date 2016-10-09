@@ -35,4 +35,5 @@ public final static short AND=289;
 public final static short NOT=290;
 public final static short IN=291;
 public final static short THEN=292;
+public final static short $prec=293;
 }
