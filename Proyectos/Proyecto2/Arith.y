@@ -11,7 +11,7 @@
 %token MENORQ MAYORQ MENOREQ MASEQ MENOSEQ MAYOREQ EQEQ DIF /* < | > | <= | += | -= | >= | == | != */
 %token PUNTCOMA DOSPUNT  /* ; | : */
 %token IF ELIF ELSE WHILE /*if | elif | else | while */
-%token OR AND NOT IN /* or | and | not | in */
+%token OR AND NOT IN NOTIN /* or | and | not | in | not in*/
 %nonassoc THEN
 %left MAS
 
@@ -124,7 +124,7 @@ comp_op: MENORQ
       | MENOREQ
       | DIF
       | IN
-      | NOT IN
+      | NOTIN
 ;
 
 /* expr: term (('+'|'-') term)* */

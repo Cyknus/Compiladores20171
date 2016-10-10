@@ -142,6 +142,7 @@ BOOLEAN   = ("True" | "False")
   "and"        { return Parser.AND;}
   "not"        { return Parser.NOT;}
   "in"        { return Parser.IN;}
+  "not in"   {return Parser.NOTIN;}
 
 }
 <INDENT>{

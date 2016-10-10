@@ -69,11 +69,11 @@
   44          | MENOREQ
   45          | DIF
   46          | IN
-  47          | NOT IN
+  47          | NOTIN
 
   48  expr : term aux6
 
-  49  aux6 : aux6 MAS term $prec MAS
+  49  aux6 : aux6 MAS term
   50       | aux6 MENOS term
 
   51  term : factor aux7
@@ -507,7 +507,7 @@ state 32
 	AND  reduce 63
 	NOT  reduce 63
 	IN  reduce 63
-	$prec  reduce 63
+	NOTIN  reduce 63
 
 	power_aux  goto 49
 
@@ -663,7 +663,6 @@ state 43
 	NOT  reduce 32
 
 
-44: shift/reduce conflict (shift 62, reduce 37) on NOT
 state 44
 	comparison : expr aux5 .  (37)
 	aux5 : aux5 . comp_op expr  (39)
@@ -674,8 +673,8 @@ state 44
 	MAYOREQ  shift 59
 	EQEQ  shift 60
 	DIF  shift 61
-	NOT  shift 62
-	IN  shift 63
+	IN  shift 62
+	NOTIN  shift 63
 	$end  reduce 37
 	NEWLINE  reduce 37
 	IDENTIFIER  reduce 37
@@ -697,6 +696,7 @@ state 44
 	WHILE  reduce 37
 	OR  reduce 37
 	AND  reduce 37
+	NOT  reduce 37
 
 	comp_op  goto 64
 
@@ -705,7 +705,7 @@ state 44
 45: shift/reduce conflict (shift 66, reduce 48) on MENOS
 state 45
 	expr : term aux6 .  (48)
-	aux6 : aux6 . MAS term $prec MAS  (49)
+	aux6 : aux6 . MAS term  (49)
 	aux6 : aux6 . MENOS term  (50)
 
 	MAS  shift 65
@@ -737,6 +737,7 @@ state 45
 	AND  reduce 48
 	NOT  reduce 48
 	IN  reduce 48
+	NOTIN  reduce 48
 
 
 state 46
@@ -779,7 +780,7 @@ state 46
 	AND  reduce 51
 	NOT  reduce 51
 	IN  reduce 51
-	$prec  reduce 51
+	NOTIN  reduce 51
 
 
 state 47
@@ -974,16 +975,15 @@ state 61
 
 
 state 62
-	comp_op : NOT . IN  (47)
-
-	IN  shift 78
-	.  error
-
-
-state 63
 	comp_op : IN .  (46)
 
 	.  reduce 46
+
+
+state 63
+	comp_op : NOTIN .  (47)
+
+	.  reduce 47
 
 
 state 64
@@ -998,7 +998,7 @@ state 64
 	MENOS  shift 10
 	.  error
 
-	expr  goto 79
+	expr  goto 78
 	term  goto 28
 	factor  goto 29
 	factor_aux  goto 30
@@ -1007,7 +1007,7 @@ state 64
 
 
 state 65
-	aux6 : aux6 MAS . term $prec MAS  (49)
+	aux6 : aux6 MAS . term  (49)
 
 	IDENTIFIER  shift 3
 	ENTERO  shift 4
@@ -1018,7 +1018,7 @@ state 65
 	MENOS  shift 10
 	.  error
 
-	term  goto 80
+	term  goto 79
 	factor  goto 29
 	factor_aux  goto 30
 	power  goto 31
@@ -1037,7 +1037,7 @@ state 66
 	MENOS  shift 10
 	.  error
 
-	term  goto 81
+	term  goto 80
 	factor  goto 29
 	factor_aux  goto 30
 	power  goto 31
@@ -1056,7 +1056,7 @@ state 67
 	MENOS  shift 10
 	.  error
 
-	factor  goto 82
+	factor  goto 81
 	factor_aux  goto 30
 	power  goto 31
 	atom  goto 32
@@ -1074,7 +1074,7 @@ state 68
 	MENOS  shift 10
 	.  error
 
-	factor  goto 83
+	factor  goto 82
 	factor_aux  goto 30
 	power  goto 31
 	atom  goto 32
@@ -1092,7 +1092,7 @@ state 69
 	MENOS  shift 10
 	.  error
 
-	factor  goto 84
+	factor  goto 83
 	factor_aux  goto 30
 	power  goto 31
 	atom  goto 32
@@ -1110,7 +1110,7 @@ state 70
 	MENOS  shift 10
 	.  error
 
-	factor  goto 85
+	factor  goto 84
 	factor_aux  goto 30
 	power  goto 31
 	atom  goto 32
@@ -1125,7 +1125,7 @@ state 71
 state 72
 	suite : NEWLINE . INDENT aux2 DEDENT  (25)
 
-	INDENT  shift 86
+	INDENT  shift 85
 	.  error
 
 
@@ -1141,7 +1141,7 @@ state 74
 
 	.  reduce 20
 
-	if_stmt_aux  goto 87
+	if_stmt_aux  goto 86
 
 
 state 75
@@ -1163,55 +1163,48 @@ state 77
 
 
 state 78
-	comp_op : NOT IN .  (47)
-
-	.  reduce 47
-
-
-state 79
 	aux5 : aux5 comp_op expr .  (39)
 
 	.  reduce 39
 
 
+state 79
+	aux6 : aux6 MAS term .  (49)
+
+	.  reduce 49
+
+
 state 80
-	aux6 : aux6 MAS term . $prec MAS  (49)
-
-	$prec  shift 88
-	.  error
-
-
-state 81
 	aux6 : aux6 MENOS term .  (50)
 
 	.  reduce 50
 
 
-state 82
+state 81
 	aux7 : aux7 POR factor .  (52)
 
 	.  reduce 52
 
 
-state 83
+state 82
 	aux7 : aux7 DIV factor .  (55)
 
 	.  reduce 55
 
 
-state 84
+state 83
 	aux7 : aux7 DIVENTERA factor .  (53)
 
 	.  reduce 53
 
 
-state 85
+state 84
 	aux7 : aux7 MODULO factor .  (54)
 
 	.  reduce 54
 
 
-state 86
+state 85
 	suite : NEWLINE INDENT . aux2 DEDENT  (25)
 
 	IDENTIFIER  shift 3
@@ -1227,7 +1220,7 @@ state 86
 	NOT  shift 13
 	.  error
 
-	stmt  goto 89
+	stmt  goto 87
 	simple_stmt  goto 15
 	compound_stmt  goto 16
 	small_stmt  goto 17
@@ -1236,7 +1229,7 @@ state 86
 	test  goto 20
 	if_stmt  goto 21
 	while_stmt  goto 22
-	aux2  goto 90
+	aux2  goto 88
 	or_test  goto 23
 	and_test  goto 24
 	not_test  goto 25
@@ -1249,13 +1242,13 @@ state 86
 	atom  goto 32
 
 
-state 87
+state 86
 	if_stmt : IF test DOSPUNT suite if_stmt_aux . aux_else  (18)
 	if_stmt_aux : if_stmt_aux . ELIF test DOSPUNT suite  (19)
 	aux_else : .  (22)
 
-	ELIF  shift 91
-	ELSE  shift 92
+	ELIF  shift 89
+	ELSE  shift 90
 	$end  reduce 22
 	IDENTIFIER  reduce 22
 	ENTERO  reduce 22
@@ -1270,23 +1263,16 @@ state 87
 	WHILE  reduce 22
 	NOT  reduce 22
 
-	aux_else  goto 93
+	aux_else  goto 91
 
 
-state 88
-	aux6 : aux6 MAS term $prec . MAS  (49)
-
-	MAS  shift 94
-	.  error
-
-
-state 89
+state 87
 	aux2 : stmt .  (27)
 
 	.  reduce 27
 
 
-state 90
+state 88
 	suite : NEWLINE INDENT aux2 . DEDENT  (25)
 	aux2 : aux2 . stmt  (26)
 
@@ -1296,7 +1282,7 @@ state 90
 	CADENA  shift 6
 	BOOLEAN  shift 7
 	PRINT  shift 8
-	DEDENT  shift 95
+	DEDENT  shift 92
 	MAS  shift 9
 	MENOS  shift 10
 	IF  shift 11
@@ -1304,7 +1290,7 @@ state 90
 	NOT  shift 13
 	.  error
 
-	stmt  goto 96
+	stmt  goto 93
 	simple_stmt  goto 15
 	compound_stmt  goto 16
 	small_stmt  goto 17
@@ -1325,7 +1311,7 @@ state 90
 	atom  goto 32
 
 
-state 91
+state 89
 	if_stmt_aux : if_stmt_aux ELIF . test DOSPUNT suite  (19)
 
 	IDENTIFIER  shift 3
@@ -1338,7 +1324,7 @@ state 91
 	NOT  shift 13
 	.  error
 
-	test  goto 97
+	test  goto 94
 	or_test  goto 23
 	and_test  goto 24
 	not_test  goto 25
@@ -1351,45 +1337,39 @@ state 91
 	atom  goto 32
 
 
-state 92
+state 90
 	aux_else : ELSE . DOSPUNT suite  (21)
 
-	DOSPUNT  shift 98
+	DOSPUNT  shift 95
 	.  error
 
 
-state 93
+state 91
 	if_stmt : IF test DOSPUNT suite if_stmt_aux aux_else .  (18)
 
 	.  reduce 18
 
 
-state 94
-	aux6 : aux6 MAS term $prec MAS .  (49)
-
-	.  reduce 49
-
-
-state 95
+state 92
 	suite : NEWLINE INDENT aux2 DEDENT .  (25)
 
 	.  reduce 25
 
 
-state 96
+state 93
 	aux2 : aux2 stmt .  (26)
 
 	.  reduce 26
 
 
-state 97
+state 94
 	if_stmt_aux : if_stmt_aux ELIF test . DOSPUNT suite  (19)
 
-	DOSPUNT  shift 99
+	DOSPUNT  shift 96
 	.  error
 
 
-state 98
+state 95
 	aux_else : ELSE DOSPUNT . suite  (21)
 
 	NEWLINE  shift 72
@@ -1409,7 +1389,7 @@ state 98
 	expr_stmt  goto 18
 	print_stmt  goto 19
 	test  goto 20
-	suite  goto 100
+	suite  goto 97
 	or_test  goto 23
 	and_test  goto 24
 	not_test  goto 25
@@ -1422,7 +1402,7 @@ state 98
 	atom  goto 32
 
 
-state 99
+state 96
 	if_stmt_aux : if_stmt_aux ELIF test DOSPUNT . suite  (19)
 
 	NEWLINE  shift 72
@@ -1442,7 +1422,7 @@ state 99
 	expr_stmt  goto 18
 	print_stmt  goto 19
 	test  goto 20
-	suite  goto 101
+	suite  goto 98
 	or_test  goto 23
 	and_test  goto 24
 	not_test  goto 25
@@ -1455,21 +1435,20 @@ state 99
 	atom  goto 32
 
 
-state 100
+state 97
 	aux_else : ELSE DOSPUNT suite .  (21)
 
 	.  reduce 21
 
 
-state 101
+state 98
 	if_stmt_aux : if_stmt_aux ELIF test DOSPUNT suite .  (19)
 
 	.  reduce 19
 
 
-State 44 contains 1 shift/reduce conflict.
 State 45 contains 2 shift/reduce conflicts.
 
 
 39 terminals, 34 nonterminals
-69 grammar rules, 102 states
+69 grammar rules, 99 states
