@@ -27,4 +27,4 @@
   Lo que hace JFlex es que a partir de las expresiones regulares definidas produce un programa llamado yylex que reconoce las cadenas que cumplen dichas reglas, es decir, produce el AFD de la e.r., a cada regla se le asocia un conjunto de acciones y cuando yylex encuentra una cadena que cumple una regla, ejecuta las acciones asociadas a esa regla
 
 ## 4. Tipo de implementación del analizador léxico que genera JFlex.
-  Usa el principio de mordida máxima y su implementación es por tablas
+  Usa el principio de mordida máxima y su implementación es por tablas. Esto porque en JFlex especificamos las expresiones regulares que tomará como válidas, entonces apartir de esto se genera la tabla que posteriormente será ocupada para verificar si una entrada dada es válida guiandose por la tabla construida.
