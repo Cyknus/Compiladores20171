@@ -123,15 +123,6 @@ BOOLEAN   = ("True" | "False")
   ">="        { return Parser.MAYOREQ;}
   "=="        { return Parser.EQEQ;}
   "!="        { return Parser.DIF;}
-
-{BOOLEAN}            { return Parser.BOOLEAN;}
-  "print"       { return Parser.PRINT;}  
-  {IDENTIFIER}                  { return Parser.IDENTIFIER;}
-  {NEWLINE}                     { yybegin(INDENT); actual=0;
-              return Parser.NEWLINE;
-          }
-  " "                           { }
-
   "if"               { return Parser.IF;}
   ";"              { return Parser.PUNTCOMA;}
   ":"              { return Parser.DOSPUNT;}
@@ -143,6 +134,16 @@ BOOLEAN   = ("True" | "False")
   "not"        { return Parser.NOT;}
   "in"        { return Parser.IN;}
   "not in"   {return Parser.NOTIN;}
+
+{BOOLEAN}            { return Parser.BOOLEAN;}
+  "print"       { return Parser.PRINT;}  
+  {IDENTIFIER}                  { return Parser.IDENTIFIER;}
+  {NEWLINE}                     { yybegin(INDENT); actual=0;
+              return Parser.NEWLINE;
+          }
+  " "                           { }
+
+
 
 }
 <INDENT>{

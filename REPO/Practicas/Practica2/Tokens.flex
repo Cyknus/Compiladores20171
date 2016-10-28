@@ -24,14 +24,15 @@ import java.util.Arrays;
     }
 
 %}
-NUMBER = [1-9]
+DIGITO = [0-9]
+NUMBER = {DIGITO}{DIGITO}* | 0 
 MAS = "+"
 MENOS = "-"
 DIV = "/"
 MULT = "*"
 %%
 
-{NUMBER}				{return Parser.NUMBER;}
+{NUMBER}				{yyparser.yylval = new ParserVal(Integer.parseInt(yytext()));return Parser.NUMBER;}
 {MAS}					{return Parser.MAS;}
 {MENOS}					{return Parser.MENOS;}
 {DIV}					{return Parser.DIV;}

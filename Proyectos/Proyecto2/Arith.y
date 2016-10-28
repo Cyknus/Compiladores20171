@@ -10,10 +10,9 @@
 %token DIVENTERA MODULO EQ /* // | % | =*/
 %token MENORQ MAYORQ MENOREQ MASEQ MENOSEQ MAYOREQ EQEQ DIF /* < | > | <= | += | -= | >= | == | != */
 %token PUNTCOMA DOSPUNT  /* ; | : */
-%token IF ELIF ELSE WHILE /*if | elif | else | while */
+%token IF ELIF ELSE
+%token WHILE /*if | elif | else | while */
 %token OR AND NOT IN NOTIN /* or | and | not | in | not in*/
-%nonassoc THEN
-%left MAS
 
 
 
@@ -32,8 +31,7 @@ stmt:  simple_stmt
 ;
 
 /* simple_stmt: small_stmt NEWLINE  */
-simple_stmt:  small_stmt
-           | small_stmt NEWLINE
+simple_stmt: small_stmt | small_stmt NEWLINE
 ;
 
 /* small_stmt: expr_stmt | print_stmt */
@@ -128,11 +126,12 @@ comp_op: MENORQ
 ;
 
 /* expr: term (('+'|'-') term)* */
-expr: term aux6
+expr: term 
+      | term aux6
 ;
 
 aux6: aux6 MAS term 
-    | aux6 MENOS term
+    | aux6 MENOS term 
 ;
 
 

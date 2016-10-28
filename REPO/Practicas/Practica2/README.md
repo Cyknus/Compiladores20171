@@ -11,4 +11,4 @@ Ser de tipo LL(1), pues se le va a quitar la recursividad izquierda.
 ## Analizadores sintácticos ascendentes (Bottom-UP)
 
 * ¿Qué resultado da la evaluación de la expresión 3-2+8? 
-En la primer gramátixa el resultado es 9, pues en esta se genera un subárbol con el simbolo "-". Que a diferencia de la gramática 2 donde el resultado es -7, pues se genera un subárbol con el simbolo "+"
+En la primer gramática el resultado es 9, pues en esta se genera un subárbol con el simbolo "-" (Derivación por la izquierda). Que a diferencia de la gramática 2 donde el resultado es -7, pues se genera un subárbol con el simbolo "+" (derivación por la derecha). Es decir, los resultados difieren por la forma en que son construidos los árboles de parseo.
