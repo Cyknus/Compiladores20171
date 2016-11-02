@@ -62,7 +62,7 @@ import java.util.Arrays;
             pila.push(espacios);
       yybegin(NORMAL);
             indents = 1;
-        }
+        }else yybegin(NORMAL);
     }
 %}
 PUNTO     = \.
@@ -124,16 +124,17 @@ BOOLEAN   = ("True" | "False")
   "=="        { return Parser.EQEQ;}
   "!="        { return Parser.DIF;}
   "if"               { return Parser.IF;}
+  "or"          { return Parser.OR;}
+  "and"        { return Parser.AND;}
+  "not"        { return Parser.NOT;}
   ";"              { return Parser.PUNTCOMA;}
   ":"              { return Parser.DOSPUNT;}
   "elif"         { return Parser.ELIF;}
   "else"         { return Parser.ELSE;}
   "while"          { return Parser.WHILE;}
-  "or"          { return Parser.OR;}
-  "and"        { return Parser.AND;}
-  "not"        { return Parser.NOT;}
   "in"        { return Parser.IN;}
   "not in"   {return Parser.NOTIN;}
+
 
 {BOOLEAN}            { return Parser.BOOLEAN;}
   "print"       { return Parser.PRINT;}  
@@ -142,22 +143,19 @@ BOOLEAN   = ("True" | "False")
               return Parser.NEWLINE;
           }
   " "                           { }
-
-
-
 }
 <INDENT>{
   {NEWLINE}       { actual = 0;}
   " "                             { actual++;}
   \t                              { actual += 4;}
   .                                 { yypushback(1); 
-                                         ;
-           yybegin(NORMAL);
+                                         this.indentacion(actual);
+           //yybegin(NORMAL);
            if(indents == 1){
               indents = 0;
               return Parser.INDENT;
            }
-           
+            
           }
 }
 <<EOF>>                                 {this.indentacion(0);
@@ -169,4 +167,3 @@ BOOLEAN   = ("True" | "False")
           }
                                         }
 [^]           {}
-        

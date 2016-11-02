@@ -10,9 +10,8 @@
 %token DIVENTERA MODULO EQ /* // | % | =*/
 %token MENORQ MAYORQ MENOREQ MASEQ MENOSEQ MAYOREQ EQEQ DIF /* < | > | <= | += | -= | >= | == | != */
 %token PUNTCOMA DOSPUNT  /* ; | : */
-%token IF ELIF ELSE
-%token WHILE /*if | elif | else | while */
-%token OR AND NOT IN NOTIN /* or | and | not | in | not in*/
+%token IF ELIF ELSE WHILE /*if | elif | else | while */
+%token OR AND NOT IN NOTIN/* or | and | not | in | not in */
 
 
 
@@ -22,7 +21,7 @@
 file_input: aux0 { System.out.println("Reconocimiento Exitoso");}
 ;
 
-aux0: aux0 stmt | 
+aux0: aux0 stmt |
 ;
 
 /* stmt: simple_stmt | compound_stmt */
@@ -31,7 +30,7 @@ stmt:  simple_stmt
 ;
 
 /* simple_stmt: small_stmt NEWLINE  */
-simple_stmt: small_stmt | small_stmt NEWLINE
+simple_stmt: small_stmt NEWLINE
 ;
 
 /* small_stmt: expr_stmt | print_stmt */
@@ -40,10 +39,13 @@ small_stmt:  expr_stmt
 ;
 
 /* expr_stmt: test [('=' | augassign) test] */
-expr_stmt: test
-          | test EQ test
-          | test augassign test 
+expr_stmt: test aux1
 ;
+
+aux1: EQ test
+    | augassign test
+;
+
 
 /* augassign: '+=' | '-=' */
 augassign:  MASEQ
@@ -54,20 +56,19 @@ augassign:  MASEQ
 print_stmt: PRINT test
 ;
 
-
 /* compound_stmt: if_stmt | while_stmt */
 compound_stmt: if_stmt
            | while_stmt
 ;
 
 /* if_stmt: 'if' test ':' suite ('elif' test ':' suite)* ['else' ':' suite] */
-if_stmt: IF test DOSPUNT suite if_stmt_aux aux_else
+if_stmt: IF test DOSPUNT suite if_stmt_aux aux8
 ;
 
 if_stmt_aux:  if_stmt_aux ELIF test DOSPUNT suite |  
 ;
 
-aux_else: ELSE DOSPUNT suite |   
+aux8: ELSE DOSPUNT suite |   
 ;
 
 
@@ -80,8 +81,8 @@ suite: simple_stmt
       | NEWLINE INDENT aux2 DEDENT
 ;
 
-aux2: aux2 stmt
-      | stmt
+aux2: stmt 
+      | aux2 stmt
 ;
 
 /* test: or_test */
@@ -89,18 +90,23 @@ test: or_test
 ;
 
 /* or_test: and_test ('or' and_test)* */
-or_test: and_test aux3
+or_test: and_test
+      | and_test aux3
 ;
 
-aux3: aux3 OR and_test |
+aux3: OR and_test 
+      | aux3 OR and_test
 ;
 
 /* and_test: not_test ('and' not_test)* */
-and_test: not_test aux4
+and_test: not_test
+      | not_test aux4
 ;
 
-aux4: aux4 AND not_test |
+aux4: AND not_test
+      | aux4 AND not_test
 ;
+
 
 /* not_test: 'not' not_test | comparison */
 not_test: NOT not_test
@@ -108,10 +114,12 @@ not_test: NOT not_test
 ;
 
 /* comparison: expr (comp_op expr)* */
-comparison: expr aux5 | expr
+comparison: expr
+      | expr aux5
 ;
 
-aux5: aux5 comp_op expr 
+aux5: comp_op expr
+    | aux5 comp_op expr
 ;
 
 /* comp_op: '<'|'>'|'=='|'>='|'<='|'!='|'in'|'not' 'in' */
@@ -126,35 +134,38 @@ comp_op: MENORQ
 ;
 
 /* expr: term (('+'|'-') term)* */
-expr: term 
+expr: term
       | term aux6
 ;
 
-aux6: aux6 MAS term 
+aux6: MAS term 
+    | MENOS term 
+    | aux6 MAS term 
     | aux6 MENOS term 
 ;
 
 
 /* term: factor (('*'|'/'|'%'|'//') factor)* */
-term: factor aux7
+term:  factor
+      | factor aux7
 ;
-aux7: aux7 POR factor 
+aux7:  POR factor
+     | DIVENTERA factor
+     | MODULO factor
+     | DIV factor
+     | aux7 POR factor 
      | aux7 DIVENTERA factor
      | aux7 MODULO factor
-     | aux7 DIV factor |
+     | aux7 DIV factor
 ;
 /* factor: ('+'|'-') factor | power */
-factor:  factor_aux factor | power
+factor:  MAS factor
+       | MENOS factor
+       | power
 ;
-
-factor_aux: MAS | MENOS 
-;
-
 /* power: atom ['**' factor] */
-power:  atom power_aux
-;
-
-power_aux: POTENCIA factor | 
+power:  atom
+      | atom POTENCIA factor
 ;
 
 /* atom: IDENTIFIER | INTEGER | STRING | FLOAT */
