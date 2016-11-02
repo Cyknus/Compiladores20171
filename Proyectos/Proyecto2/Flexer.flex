@@ -1,6 +1,6 @@
 /********************************************************************************
 **  Proyecto 2: Analizador léxico para p--, subconjunto de Python.                               **
-**  @author Diana Montes                                                                       **
+
 *********************************************************************************/
 import java.util.Stack;
 import java.util.Arrays;
