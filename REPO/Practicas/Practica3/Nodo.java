@@ -11,7 +11,7 @@ public class Nodo{
 	}
 
 	public void setValor(Object valor){
-		this.valor = valor
+		this.valor = valor;
 	}
 
 	public Nodo getHijoIzq(){
@@ -163,7 +163,7 @@ class HojaIdentificador extends Hoja{
 		valor = (Object)identificador;
     }
 	
-	public String getValue(){
+	public String getValor(){
 		return (String) this.valor;
     }    
 }
@@ -174,7 +174,7 @@ class HojaEntera extends Hoja{
 		valor = (Object) val;
     }
 
-    public Integer getValue(){
+    public Integer getValor(){
 		return (Integer) this.valor;
     }    
 }
@@ -184,7 +184,7 @@ class HojaCadena extends Hoja{
 		valor = (Object)cadena;
 	}
 
-	public String getValue(){
+	public String getValor(){
 		return (String) this.valor;
     }
 }
@@ -194,7 +194,7 @@ class HojaReal extends Hoja{
 		valor = (Object) val;
 	}
 
-	public Double getValue(){
+	public Double getValor(){
 		return (Double) this.valor;
     }
 }
@@ -204,7 +204,7 @@ class HojaBoleano extends Hoja{
 		valor = (Object) bol;
 	}
 
-	public Boolean getValue(){
+	public Boolean getValor(){
 		return (Boolean) this.valor;
     }
 

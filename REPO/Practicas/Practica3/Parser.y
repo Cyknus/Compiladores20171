@@ -88,7 +88,7 @@ suite: simple_stmt {$$ = $1;}
 ;
 
 aux2: stmt {$$ = $1;}
-      | aux2 stmt
+      | aux2 stmt {$$ = $1; $$ = $2;}
 ;
 
 /* test: or_test */
@@ -97,76 +97,76 @@ test: or_test {$$ = $1;}
 
 /* or_test: and_test ('or' and_test)* */
 or_test: and_test {$$ = $1;}
-      | and_test aux3
+      | and_test aux3 {$$ = $1; $$ = $2;}
 ;
 
-aux3: OR and_test 
-      | aux3 OR and_test
+aux3: OR and_test {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+      | aux3 OR and_test {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
 ;
 
 /* and_test: not_test ('and' not_test)* */
 and_test: not_test {$$ = $1;}
-      | not_test aux4
+      | not_test aux4 {$$ = $1; $$ = $2;}
 ;
 
-aux4: AND not_test
-      | aux4 AND not_test
+aux4: AND not_test {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+      | aux4 AND not_test {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
 ;
 
 
 /* not_test: 'not' not_test | comparison */
-not_test: NOT not_test
+not_test: NOT not_test {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
       | comparison {$$ = $1;}
 ;
 
 /* comparison: expr (comp_op expr)* */
 comparison: expr {$$ = $1;}
-      | expr aux5
+      | expr aux5 {$$ = $1; $$ = $2;}
 ;
 
 aux5: comp_op expr {$$ = $1;}
-    | aux5 comp_op expr
+    | aux5 comp_op expr {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
 ;
 
 /* comp_op: '<'|'>'|'=='|'>='|'<='|'!='|'in'|'not' 'in' */
-comp_op: MENORQ
-      | MAYORQ
-      | EQEQ
-      | MAYOREQ
-      | MENOREQ
-      | DIF
-      | IN
-      | NOTIN
+comp_op: MENORQ {$$ = $1;}
+      | MAYORQ {$$ = $1;}
+      | EQEQ {$$ = $1;}
+      | MAYOREQ {$$ = $1;}
+      | MENOREQ {$$ = $1;}
+      | DIF {$$ = $1;}
+      | IN {$$ = $1;}
+      | NOTIN {$$ = $1;}
 ;
 
 /* expr: term (('+'|'-') term)* */
 expr: term {$$ = $1;}
-      | term aux6
+      | term aux6 {$$ = $1; $$ = $2;}
 ;
 
-aux6: MAS term 
-    | MENOS term 
-    | aux6 MAS term 
-    | aux6 MENOS term 
+aux6: MAS term {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+    | MENOS term {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+    | aux6 MAS term {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
+    | aux6 MENOS term {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
 ;
 
 
 /* term: factor (('*'|'/'|'%'|'//') factor)* */
 term:  factor {$$ = $1;}
-      | factor aux7
+      | factor aux7 {$$ = $1; $$ = $2;}
 ;
-aux7:  POR factor
-     | DIVENTERA factor
-     | MODULO factor
-     | DIV factor
-     | aux7 POR factor 
-     | aux7 DIVENTERA factor
-     | aux7 MODULO factor
-     | aux7 DIV factor
+aux7:  POR factor {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+     | DIVENTERA factor {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+     | MODULO factor {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+     | DIV factor {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+     | aux7 POR factor {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
+     | aux7 DIVENTERA factor {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
+     | aux7 MODULO factor {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
+     | aux7 DIV factor {Nodo izq = (Nodo) $1.obj; Nodo n = (Nodo) $2.obj; Nodo der = (Nodo) $3.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
 ;
 /* factor: ('+'|'-') factor | power */
-factor:  MAS factor
-       | MENOS factor
+factor:  MAS factor  {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
+       | MENOS factor {Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $2.obj; n.setHijoDer(der); $$ = new ParserVal(n);}
        | power {$$ = $1;}
 ;
 /* power: atom ['**' factor] */
