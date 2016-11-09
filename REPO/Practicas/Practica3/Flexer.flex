@@ -123,21 +123,21 @@ BOOLEAN   = ("True" | "False")
   ">="        { yyparser.yylval = new NodoMayorEq(yytext());return Parser.MAYOREQ;}
   "=="        { yyparser.yylval = new NodoEqEq(yytext());return Parser.EQEQ;}
   "!="        { yyparser.yylval = new NodoDif(yytext());return Parser.DIF;}
-  "if"        { return Parser.IF;}
+  "if"        { yyparser.yylval = new NodoIf(yytext()); return Parser.IF;}
   "or"         { yyparser.yylval = new NodoOr(yytext());return Parser.OR;}
   "and"        { yyparser.yylval = new NodoAnd(yytext());return Parser.AND;}
-  "not"        {return Parser.NOT;}
-  ";"              { return Parser.PUNTCOMA;}
-  ":"              { return Parser.DOSPUNT;}
-  "elif"         { return Parser.ELIF;}
-  "else"         { return Parser.ELSE;}
-  "while"        { return Parser.WHILE;}
-  "in"       {return Parser.IN;}
-  "not in"   {return Parser.NOTIN;}
+  "not"        {yyparser.yylval = new NodoNot(yytext()); return Parser.NOT;}
+  ";"              { yyparser.yylval = new NodoPuntComa(yytext()); return Parser.PUNTCOMA;}
+  ":"              { yyparser.yylval = new NodoComa(yytext()); return Parser.DOSPUNT;}
+  "elif"         { yyparser.yylval = new NodoElif(yytext()); return Parser.ELIF;}
+  "else"         { yyparser.yylval = new NodoElse(yytext()); return Parser.ELSE;}
+  "while"        { yyparser.yylval = new NodoWhile(yytext()); return Parser.WHILE;}
+  "in"       { yyparser.yylval = new NodoIn(yytext()); return Parser.IN;}
+  "not in"   { yyparser.yylval = new NodoNotIn(yytext()); return Parser.NOTIN;}
 
 
 {BOOLEAN}            { yyparser.yylval = new HojaBoleano(Boolean.parseBoolean(yytext())); return Parser.BOOLEAN;}
-  "print"       { return Parser.PRINT;}  
+  "print"       { yyparser.yylval = new NodoPrint(yytext()); return Parser.PRINT;}  
   {IDENTIFIER}                  { yyparser.yylval = new HojaIdentificador(yytext()); return Parser.IDENTIFIER;}
   {NEWLINE}                     { yybegin(INDENT); actual=0;
               return Parser.NEWLINE;

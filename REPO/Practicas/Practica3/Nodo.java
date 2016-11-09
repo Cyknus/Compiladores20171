@@ -1,3 +1,5 @@
+/** Clase Nodo, donde se define el comportamiento para los nodos **/
+
 public class Nodo{
 
 	Object valor;
@@ -7,7 +9,6 @@ public class Nodo{
 	public Object getValor(){
 		return valor;
 	}
-
 
 	public void setValor(Object valor){
 		this.valor = valor
@@ -31,6 +32,8 @@ public class Nodo{
 
 }
 
+
+/** Clases para cada Nodo especifico**/
 class NodoMas extends Nodo{
 
 }
@@ -104,10 +107,55 @@ class NodoAnd extends Nodo{
 
 }
 
+class NodoIf extends Nodo{
 
-
-class Hoja extends Nodo{
 }
+
+class NodoNot extends Nodo{
+
+}
+
+class NodoPuntComa extends Nodo{
+
+}
+
+class NodoComa extends Nodo{
+
+}
+
+class NodoElif extends Nodo{
+
+}
+
+class NodoElse extends Nodo{
+
+}
+
+class NodoWhile extends Nodo{
+
+}
+
+class NodoIn extends Nodo{
+
+}
+
+class NodoNotIn extends Nodo{
+
+}
+
+class NodoPrint extends Nodo{
+
+}
+
+
+
+/** Clase Hoja**/
+class Hoja extends Nodo{
+	
+}
+
+
+/** Clases para cada Nodo Hoja en especifico **/
 
 class HojaIdentificador extends Hoja{
 
