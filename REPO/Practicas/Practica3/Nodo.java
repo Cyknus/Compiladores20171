@@ -15,7 +15,7 @@ public class Nodo{
 	}
 
 	public Nodo getHijoIzq(){
-		return izq;
+		 return izq;
     }
 
     public void setHijoIzq(Nodo izq){

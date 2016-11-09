@@ -29,7 +29,7 @@ aux0: stmt {$$ = $1;}
 ;
 
 /* stmt: simple_stmt | compound_stmt */
-stmt:  simple_stmt {$$ = $1;}
+stmt:  simple_stmt  {$$ = $1;}
       | compound_stmt {$$ = $1;}
 ;
 
