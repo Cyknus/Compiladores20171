@@ -67,24 +67,24 @@ compound_stmt: if_stmt {$$ = $1;}
 ;
 
 /* if_stmt: 'if' test ':' suite ('elif' test ':' suite)* ['else' ':' suite] */
-if_stmt: IF test DOSPUNT suite {$$ = $2; $$ = $4;}
+if_stmt: IF test DOSPUNT suite {Nodo izq = (Nodo) $2.obj; Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $4.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
           | IF test DOSPUNT suite ELSE DOSPUNT suite
           | IF test DOSPUNT suite if_stmt_aux ELSE DOSPUNT suite
 ;
 
-if_stmt_aux: ELIF test DOSPUNT suite {$$ = $2; $$ = $4;}
+if_stmt_aux: ELIF test DOSPUNT suite {Nodo izq = (Nodo) $2.obj; Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $4.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
           | if_stmt_aux ELIF test DOSPUNT suite  
 ;
 
 
 
 /* while_stmt: 'while' test ':' suite */
-while_stmt: WHILE test DOSPUNT suite {$$ = $2; $$ = $4;}
+while_stmt: WHILE test DOSPUNT suite {Nodo izq = (Nodo) $2.obj; Nodo n = (Nodo) $1.obj; Nodo der = (Nodo) $4.obj; n.setHijoIzq(izq); n.setHijoDer(der); $$ = new ParserVal(n);}
 ;
 
 /* suite: simple_stmt | NEWLINE INDENT stmt+ DEDENT */
 suite: simple_stmt {$$ = $1;}
-      | NEWLINE INDENT aux2 DEDENT
+      | NEWLINE INDENT aux2 DEDENT {$$ = $3}
 ;
 
 aux2: stmt {$$ = $1;}
