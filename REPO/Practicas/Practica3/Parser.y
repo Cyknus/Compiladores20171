@@ -84,7 +84,7 @@ while_stmt: WHILE test DOSPUNT suite {Nodo izq = (Nodo) $2.obj; Nodo n = (Nodo) 
 
 /* suite: simple_stmt | NEWLINE INDENT stmt+ DEDENT */
 suite: simple_stmt {$$ = $1;}
-      | NEWLINE INDENT aux2 DEDENT {$$ = $3}
+      | NEWLINE INDENT aux2 DEDENT {$$ = $3;}
 ;
 
 aux2: stmt {$$ = $1;}
