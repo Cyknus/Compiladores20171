@@ -3,7 +3,7 @@
 > Equipo Tlacuaches
 -------------------
 
-Repositorio para el curso de compiladores del ciclo 2017-1 de la H. UNAM.
+Repositorio para el curso de compiladores del ciclo 2017-1 de la H. UNAM
 
 * Ochoa Gonzalez Uriel batman@ciencias.unam.mx
 * Coloapa Díaz Alejandra aleexkj@ciencias.unam.mx
