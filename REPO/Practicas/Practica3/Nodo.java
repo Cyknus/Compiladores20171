@@ -49,16 +49,8 @@ class NodoRaiz extends Nodo{
     this.hijos = new ArrayList<Nodo>();
   }
 
-  public String getValor(){
-    return valor;
-  }
-
-  public void setValor(String v) {
-    this.valor = v;
-  }
-
-  public void setHijo(Nodo h){
-    this.hijos.add(h);
+   public ArrayList<Nodo> getHijos(){
+    return hijos;
   }
 
 }

@@ -1,4 +1,5 @@
 public interface Visitante{
+
 	public void visita(Nodo nodo);
 	public void visita(NodoRaiz raiz);
 	public void visita(NodoMas mas);
@@ -19,14 +20,14 @@ public interface Visitante{
 	public void visita(NodoDif dif);
 	public void visita(NodoOr or);
 	public void visita(NodoAnd or);
-	public void visita(NodoIf if);
+	public void visita(NodoIf iff);
 	public void visita(NodoIfAux ifaux);
 	public void visita(NodoNot not);
 	public void visita(NodoComa coma);
 	public void visita(NodoPuntComa pyc);
 	public void visita(NodoElif elif);
-	public void visita(NodoElse else);
-	public void visita(NodoWhile while);
+	public void visita(NodoElse elsee);
+	public void visita(NodoWhile whilee);
 	public void visita(NodoIn in);
 	public void visita(NodoNotIn notin);
 	public void visita(NodoDosPuntos dospun);

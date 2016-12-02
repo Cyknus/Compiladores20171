@@ -109,7 +109,7 @@ public class Tipos{
   }
 
   /**Regresa tipo de operación**/
-  public String operacion (String izq, String der, String operador) {
+  public String operacion (String izq, String operador, String der) {
     String tipOperacion = "";
     if (tipos.contains(izq) && tipos.contains(der)){
       int tipo = 0;
