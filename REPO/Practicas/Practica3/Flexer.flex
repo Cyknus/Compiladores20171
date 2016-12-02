@@ -98,49 +98,48 @@ BOOLEAN   = ("True" | "False")
 <CADENA>{
   {CHAR_LITERAL}+     {cadena = yytext();}
   \"          { yybegin(NORMAL);
-           cadena = ""; yyparser.yylval = new ParserVal(new HojaCadena(yytext()));
+            yyparser.yylval = new HojaCadena(cadena);
            return Parser.CADENA;}
   {NEWLINE}       { System.out.println("Unexpected newline. Line "+(yyline+1));
                                          System.exit(1);}
 }
 <NORMAL>{  
   \"            { yybegin(CADENA); }
-  {REAL}        { yyparser.yylval = new ParserVal(new HojaReal(Double.parseDouble(yytext()))); return Parser.REAL;}
-  {ENTERO}      { yyparser.yylval = new ParserVal(new HojaEntera(Integer.parseInt(yytext()))); return Parser.ENTERO; }
-  "+"           { yyparser.yylval = new ParserVal(new NodoMas()); return Parser.MAS;} 
-  "-"           { yyparser.yylval = new ParserVal(new NodoMenos());return Parser.MENOS;} 
-  "*"           { yyparser.yylval = new ParserVal(new NodoPor());return Parser.POR;} 
-  "**"          { yyparser.yylval = new ParserVal(new NodoPotencia());return Parser.POTENCIA;} 
-  "/"           { yyparser.yylval = new ParserVal(new NodoDiv());return Parser.DIV;} 
-  "//"          { yyparser.yylval = new ParserVal(new NodoDivEntera());return Parser.DIVENTERA;}
-  "%"           { yyparser.yylval = new ParserVal(new NodoModulo());return Parser.MODULO;}
-  "="           { yyparser.yylval = new ParserVal(new NodoEq());return Parser.EQ;}
-  "<"           { yyparser.yylval = new ParserVal(new NodoMenorQ());return Parser.MENORQ;}
-  ">"           { yyparser.yylval = new ParserVal(new NodoMayorQ());return Parser.MAYORQ;}
-  "<="          { yyparser.yylval = new ParserVal(new NodoMenorEq());return Parser.MENOREQ;}
-  "+="          { yyparser.yylval = new ParserVal(new NodoMasEq());return Parser.MASEQ;}
-  "-="        { yyparser.yylval = new ParserVal(new NodoMenosEq());return Parser.MENOSEQ;}
-  ">="        { yyparser.yylval = new ParserVal(new NodoMayorEq());return Parser.MAYOREQ;}
-  "=="        { yyparser.yylval = new ParserVal(new NodoEqEq());return Parser.EQEQ;}
-  "!="        { yyparser.yylval = new ParserVal(new NodoDif());return Parser.DIF;}
-  "if"        { yyparser.yylval = new ParserVal(new NodoIf()); return Parser.IF;}
-  "or"         { yyparser.yylval = new ParserVal(new NodoOr());return Parser.OR;}
-  "and"        { yyparser.yylval = new ParserVal(new NodoAnd());return Parser.AND;}
-  "not"        {yyparser.yylval = new ParserVal(new NodoNot()); return Parser.NOT;}
-  ";"              { yyparser.yylval = new ParserVal(new NodoPuntComa()); return Parser.PUNTCOMA;}
-  ":"               { yyparser.yylval = new ParserVal(new NodoComa()); return Parser.DOSPUNT;}
-  "elif"         { yyparser.yylval = new ParserVal(new NodoElif()); return Parser.ELIF;}
-  "else"         { yyparser.yylval = new ParserVal(new NodoElse()); return Parser.ELSE;}
-  "while"        { yyparser.yylval = new ParserVal(new NodoWhile()); return Parser.WHILE;}
-  "in"       { yyparser.yylval = new ParserVal(new NodoIn()); return Parser.IN;}
-  "not in"   { yyparser.yylval = new ParserVal(new NodoNotIn()); return Parser.NOTIN;}
+  {REAL}        { yyparser.yylval = new HojaReal(yytext()); return Parser.REAL;}
+  {ENTERO}      { yyparser.yylval = new HojaEntera(yytext()); return Parser.ENTERO; }
+  "+"           { yyparser.yylval = new NodoMas(yytext()); return Parser.MAS;} 
+  "-"           { yyparser.yylval = new NodoMenos(yytext());return Parser.MENOS;} 
+  "*"           { yyparser.yylval = new NodoPor(yytext());return Parser.POR;} 
+  "**"          { yyparser.yylval = new NodoPotencia(yytext());return Parser.POTENCIA;} 
+  "/"           { yyparser.yylval = new NodoDiv(yytext());return Parser.DIV;} 
+  "//"          { yyparser.yylval = new NodoDivEntera(yytext());return Parser.DIVENTERA;}
+  "%"           { yyparser.yylval = new NodoModulo(yytext());return Parser.MODULO;}
+  "="           { yyparser.yylval = new NodoEq(yytext());return Parser.EQ;}
+  "<"           { yyparser.yylval = new NodoMenorQ(yytext());return Parser.MENORQ;}
+  ">"           { yyparser.yylval = new NodoMayorQ(yytext());return Parser.MAYORQ;}
+  "<="          { yyparser.yylval = new NodoMenorEq(yytext());return Parser.MENOREQ;}
+  "+="          { yyparser.yylval = new NodoMasEq(yytext());return Parser.MASEQ;}
+  "-="          { yyparser.yylval = new NodoMenosEq(yytext());return Parser.MENOSEQ;}
+  ">="          { yyparser.yylval = new NodoMayorEq(yytext());return Parser.MAYOREQ;}
+  "=="          { yyparser.yylval = new NodoEqEq(yytext());return Parser.EQEQ;}
+  "!="          { yyparser.yylval = new NodoDif(yytext());return Parser.DIF;}
+  "if"          { yyparser.yylval = new NodoIf(yytext()); return Parser.IF;}
+  "or"          { yyparser.yylval = new NodoOr(yytext());return Parser.OR;}
+  "and"         { yyparser.yylval = new NodoAnd(yytext());return Parser.AND;}
+  "not"         { yyparser.yylval = new NodoNot(yytext()); return Parser.NOT;}
+  ";"           { yyparser.yylval = new NodoPuntComa(yytext()); return Parser.PUNTCOMA;}
+  ":"           { yyparser.yylval = new NodoComa(yytext()); return Parser.DOSPUNT;}
+  "elif"        { yyparser.yylval = new NodoElif(yytext()); return Parser.ELIF;}
+  "else"        { yyparser.yylval = new NodoElse(yytext()); return Parser.ELSE;}
+  "while"       { yyparser.yylval = new NodoWhile(yytext()); return Parser.WHILE;}
+  "in"          { yyparser.yylval = new NodoIn(yytext()); return Parser.IN;}
+  "not in"      { yyparser.yylval = new NodoNotIn(yytext()); return Parser.NOTIN;}
 
 
-{BOOLEAN}            { yyparser.yylval = new ParserVal(new HojaBoleano(Boolean.parseBoolean(yytext()))); return Parser.BOOLEAN;}
-  "print"       { yyparser.yylval = new ParserVal(new NodoPrint()); return Parser.PRINT;}  
-  {IDENTIFIER}                  { yyparser.yylval = new ParserVal(new HojaIdentificador(yytext())); return Parser.IDENTIFIER;}
-  {NEWLINE}                     { yybegin(INDENT); actual=0;
-              return Parser.NEWLINE;
+{BOOLEAN}            { yyparser.yylval = new HojaBoleano(yytext()); return Parser.BOOLEAN;}
+  "print"            
+  {IDENTIFIER}       { yyparser.yylval = new HojaIdentificador(yytext()); return Parser.IDENTIFIER;}
+  {NEWLINE}                     { yybegin(INDENT); actual=0;yyparser.yylval = new NodoNewLine(yytext()); return Parser.NEWLINE;
           }
   " "                           { }
 }

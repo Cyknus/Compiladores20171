@@ -1,6 +1,10 @@
+#/bin/bash
 compile:
-	byacc -J -dv Parser.y && jflex Flexer.flex
-	javac *.java
+	byacc -dv -Jsemantic=Nodo Parser.y && jflex Flexer.flex
+	
+	javac Parser.java && javac Flexer.java
+
+test:
 	java Parser ${file}
 
 clean:
