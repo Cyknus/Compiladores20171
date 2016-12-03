@@ -22,6 +22,7 @@ public interface Visitante{
 	public void visita(NodoAnd or);
 	public void visita(NodoIf iff);
 	public void visita(NodoIfAux ifaux);
+	public void visita(NodoSuite suit);
 	public void visita(NodoNot not);
 	public void visita(NodoComa coma);
 	public void visita(NodoPuntComa pyc);

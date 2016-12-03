@@ -3,6 +3,7 @@ import java.util.*;
 
 public class Nodo{
 
+  String tipo;
 	String valor;
 	Nodo izq;
 	Nodo der;
@@ -16,27 +17,41 @@ public class Nodo{
 		this.valor = valor;
 	}
 
+  public void setHijoo(Nodo nodo){
+    for (Nodo n: nodo.hijos) {
+      this.hijos.add(n);
+    }
+  }
+
 	public Nodo getHijoIzq(){
 		 return izq;
-    }
+  }
 
-    public void setHijoIzq(Nodo izq){
+  public void setHijoIzq(Nodo izq){
 		this.izq = izq;
-    }
+  }
 
-    public Nodo getHijoDer(){
+  public Nodo getHijoDer(){
 		return der;
-    }
+  }
 
-    public void setHijoDer(Nodo der){
+  public void setHijoDer(Nodo der){
 		this.der = der;
-    }
+  }
 
-    public void setHijo(Nodo hijo){
+  public void setHijo(Nodo hijo){
     	this.hijos.add(hijo);
   }
 
-    public void acepta(Visitante v){
+  public void setTipo(String tipo){
+    this.tipo = tipo;
+  }
+
+  public String getTipo(){
+    return tipo;
+  }
+
+  public void acepta(Visitante v){
   	v.visita(this);
   }
 
@@ -347,6 +362,25 @@ public NodoIf(String valor){
 /**Clase para Nodo IFAUX**/
 class NodoIfAux extends Nodo{
   public NodoIfAux(String valor){
+    this.valor = valor;
+    this.hijos = new ArrayList<Nodo>();
+  }
+
+  public void setHijo(Nodo hijo){
+    this.hijos.add(hijo);
+  }
+
+  public void setHijosdeHijo(Nodo hijo){
+    for (Nodo n: hijo.hijos) {
+      this.hijos.add(n);
+    }
+  }
+
+}
+
+/**Clase para Nodo Suite**/
+class NodoSuite extends Nodo{
+  public NodoSuite(String valor){
     this.valor = valor;
     this.hijos = new ArrayList<Nodo>();
   }

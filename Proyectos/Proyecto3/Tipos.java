@@ -141,6 +141,12 @@ public class Tipos{
         case "or": 
         	tipo = or[tipos.indexOf(izq)][tipos.indexOf(der)];
             break;
+        case "==": 
+          tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
+            break;
+        case "!=": 
+          tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
+            break;
         case "<": 
         	tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
             break;
@@ -153,12 +159,6 @@ public class Tipos{
         case ">=": 
         	tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
             break;
-        case "==": 
-        	tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
-            break;
-        case "!=": 
-        	tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
-            break;
         case "<>": 
         	tipo = comparacion[tipos.indexOf(izq)][tipos.indexOf(der)];
             break;
@@ -169,7 +169,7 @@ public class Tipos{
       if(tipo >= 0){
         tipOperacion = tipos.get(tipo);
       }else{
-        System.out.println("Error de Tipado");
+        System.out.println("ERROR de Tipado");
         System.exit(1);
       }
     }

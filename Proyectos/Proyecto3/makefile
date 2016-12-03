@@ -13,5 +13,5 @@ clean:
 	rm *.output
 	rm Parser.java
 	rm ParserTokens.java
-	rm ParserVal.java
 	rm Flexer.java
+	rm ParserVal.java
